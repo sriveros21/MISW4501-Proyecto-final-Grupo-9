@@ -2,8 +2,8 @@ from flask import Flask, jsonify, request, Blueprint
 from ..commands.create_user import CreateUser
 from ..commands.update_user import UpdateUser
 from ..commands.generate_token import GenerateToken
-from ..commands.get_user import GetUser
-from ..commands.health_user import PingCommand
+from ..queries.get_user import GetUser
+from ..queries.health_user import PingCommand
 from ..commands.reset_user import ResetUserDataBase
 from ..commands.update_user_native import UpdateUserNative
 import os

@@ -1,0 +1,63 @@
+team:
+   name: Grupo-24
+   members:
+      - user: <r.celis@uniandes.edu.co>
+        percentage: 50
+      - user: <lf.navarroj@uniandes.edu.co>
+        percentage: 50
+      - user: <usuario uniandes>
+        percentage: 0
+      - user: <usuario uniandes>
+        percentage: <0 a 100>
+board: https://github.com/MISW-4301-Desarrollo-Apps-en-la-Nube/s202314-proyecto-grupo24/projects?query=is%3Aopen
+url: 34.120.40.147
+user-management:
+  folder: user_management
+  port: 3000
+  authors:
+    - lf.navarroj@uniandes.edu.co
+post-management:
+  folder: post_management
+  port: 3001
+  authors:
+    - r.celis@uniandes.edu.co
+offer-management:
+  folder: offer_management
+  port: 3003
+  authors:
+    - r.celis@uniandes.edu.co
+route-management:
+  folder: route_management
+  port: 3002
+  authors:
+    - lf.navarroj@uniandes.edu.co
+score-management:
+  folder: score_management
+  port: 3004
+  authors:
+    - lf.navarroj@uniandes.edu.co
+create-post:
+  folder: create_post
+  port: 3005
+  authors:
+    - r.celis@uniandes.edu.co
+create-offer:
+  folder: create_offer
+  port: 3006
+  authors:
+    - lf.navarroj@uniandes.edu.co
+filter-post:
+  folder: filter_post
+  port: 3007
+  authors:
+    - r.celis@uniandes.edu.co
+function-send-mail:
+  folder: function_send_mail
+  port: 3008
+  authors:
+    - r.celis@uniandes.edu.co
+credit-card:
+  folder: credit_card
+  port: 5000
+  authors:
+    - lf.navarroj@uniandes.edu.co

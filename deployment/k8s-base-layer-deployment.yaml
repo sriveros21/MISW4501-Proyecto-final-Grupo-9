@@ -1,0 +1,282 @@
+###################################
+# user-management
+###################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-management
+  labels:
+    app: user-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-management
+  template:
+    metadata:
+      labels:
+        app: user-management
+    spec:
+      containers:
+        - name: user-management
+          image: us-central1-docker.pkg.dev/devnativa24/dev-nativa-24-container/user_management:1.0
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: "DATABASE_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: appsecrets 
+                  key: uri
+          ports:
+            - containerPort: 3000
+          # Realizar pull siempre a la imagen
+          imagePullPolicy: Always
+
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: user-management-config
+spec:
+  healthCheck:
+    checkIntervalSec: 30
+    port: 3000
+    type: HTTP
+    requestPath: /users/ping
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: service-user-management
+  annotations:
+    cloud.google.com/backend-config: '{"default": "user-management-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: user-management
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 31019
+
+---
+
+###################################
+# route-management
+###################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: route-management
+  labels:
+    app: route-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: route-management
+  template:
+    metadata:
+      labels:
+        app: route-management
+    spec:
+      containers:
+        - name: route-management
+          image: us-central1-docker.pkg.dev/devnativa24/dev-nativa-24-container/route_management:1.0
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: "DATABASE_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: appsecrets 
+                  key: uri
+            - name: USERS_PATH
+              value: http://service-user-management
+          ports:
+            - containerPort: 3002
+          # Realizar pull siempre a la imagen
+          imagePullPolicy: Always
+
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: route-management-config
+spec:
+  healthCheck:
+    checkIntervalSec: 30
+    port: 3002
+    type: HTTP
+    requestPath: /routes/ping
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: service-route-management
+  annotations:
+    cloud.google.com/backend-config: '{"default": "route-management-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: route-management
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3002
+      nodePort: 31018
+
+---
+
+###################################
+# post-management
+###################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-management
+  labels:
+    app: post-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: post-management
+  template:
+    metadata:
+      labels:
+        app: post-management
+    spec:
+      containers:
+        - name: post-management
+          image: us-central1-docker.pkg.dev/devnativa24/dev-nativa-24-container/post_management:1.0
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: "DATABASE_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: appsecrets 
+                  key: uri
+            - name: USERS_PATH
+              value: http://service-user-management
+          ports:
+            - containerPort: 3001
+          # Realizar pull siempre a la imagen
+          imagePullPolicy: Always
+
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: post-management-config
+spec:
+  healthCheck:
+    checkIntervalSec: 30
+    port: 3001
+    type: HTTP
+    requestPath: /posts/ping
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: service-post-management
+  annotations:
+    cloud.google.com/backend-config: '{"default": "post-management-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: post-management
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3001
+      nodePort: 31017
+---
+
+###################################
+# offer-management
+###################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: offer-management
+  labels:
+    app: offer-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: offer-management
+  template:
+    metadata:
+      labels:
+        app: offer-management
+    spec:
+      containers:
+        - name: offer-management
+          image: us-central1-docker.pkg.dev/devnativa24/dev-nativa-24-container/offer_management:1.0
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: "DATABASE_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: appsecrets 
+                  key: uri
+            - name: USERS_PATH
+              value: http://service-user-management
+          ports:
+            - containerPort: 3003
+          # Realizar pull siempre a la imagen
+          imagePullPolicy: Always
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: offer-management-config
+spec:
+  healthCheck:
+    checkIntervalSec: 30
+    port: 3003
+    type: HTTP
+    requestPath: /offers/ping
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: service-offer-management
+  annotations:
+    cloud.google.com/backend-config: '{"default": "offer-management-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: offer-management
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3003
+      nodePort: 31016
+---

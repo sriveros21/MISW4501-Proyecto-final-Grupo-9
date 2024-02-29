@@ -1,0 +1,155 @@
+version: '3'
+
+services:
+
+  # database_route:
+  #   image: postgres:13
+  #   container_name: route_container
+  #   environment:
+  #     POSTGRES_DB: database_route
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: nativa1234
+  #   networks:
+  #     - route_net
+
+  #   healthcheck:
+  #         test: ["CMD-SHELL", "pg_isready -U postgres -d database_route"]
+  #         interval: 5s
+  #         timeout: 10s
+  #         retries: 5
+
+  # route_management:
+  #   build:
+  #     context: ./route_management
+  #   container_name: route_management_container
+  #   ports:
+  #     - "3002:3002"
+  #   depends_on:
+  #     database_route:
+  #       condition: service_healthy
+
+  #   environment:
+  #     DATABASE_URL: postgresql://postgres:nativa1234@database_route:5432/database_route
+  #   networks:
+  #     - app_net
+  #     - route_net
+      
+  # database_offer:
+  #   image: postgres:13
+  #   container_name: offer_container
+  #   environment:
+  #     POSTGRES_DB: database_offer
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: nativa1234
+  #   networks:
+  #     - offer_net
+
+  #   healthcheck:
+  #         test: ["CMD-SHELL", "pg_isready -U postgres -d database_offer"]
+  #         interval: 5s
+  #         timeout: 10s
+  #         retries: 5
+          
+  # offer_management:
+  #   build:
+  #     context: ./offer_management
+  #   container_name: offer_management_container
+  #   ports:
+  #     - "3003:3003"
+  #   depends_on:
+  #     database_offer:
+  #       condition: service_healthy
+  #   environment:
+  #     DATABASE_URL: postgresql://postgres:nativa1234@database_offer:5432/database_offer
+  #   networks:
+  #     - app_net
+  #     - offer_net
+
+  # database_post:
+  #   image: postgres:13
+  #   container_name: post_container
+  #   environment:
+  #     POSTGRES_DB: database_post
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: nativa1234
+  #   networks:
+  #     - post_net
+
+  #   healthcheck:
+  #         test: ["CMD-SHELL", "pg_isready -U postgres -d database_post"]
+  #         interval: 5s
+  #         timeout: 10s
+  #         retries: 5
+
+  # post_management:
+  #   build:
+  #     context: ./post_management
+  #   container_name: post_management_container
+  #   ports:
+  #     - "3001:3001"
+  #   depends_on:
+  #     database_post:
+  #       condition: service_healthy
+  #   environment:
+  #     DATABASE_URL: postgresql://postgres:nativa1234@database_post:5432/database_post
+  #   networks:
+  #     - app_net
+  #     - post_net
+      
+
+
+
+  database_user:
+    image: postgres:13
+    container_name: user_container
+    environment:
+      POSTGRES_DB: database_user
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: nativa1234
+    networks:
+      - user_net
+
+    healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres -d database_user"]
+          interval: 5s
+          timeout: 10s
+          retries: 5
+
+  user_management:
+    build:
+      context: ./user_management
+    container_name: user_management_container
+    ports:
+      - "3500:3500"
+    depends_on:
+      database_user:
+        condition: service_healthy
+
+    environment:
+      DATABASE_URL: postgresql://postgres:nativa1234@database_user:5432/database_user
+      NATIVE_PATH: http://localhost:3000
+      SECRET_TOKEN: qwerty
+    networks:
+      - app_net
+      - user_net
+
+  app_native:
+    image: ghcr.io/misw-4301-desarrollo-apps-en-la-nube/true-native:2.0.0
+    container_name: native_management
+    ports:
+      - "3000:3000"
+    environment:
+      SECRET_TOKEN: qwerty
+      MAX_WEBHOOK_DELAY: 50
+      MAX_POLL_DELAY: 20
+      SUCCESS_RATE: 80
+    networks:
+      - user_net
+
+networks:
+  app_net:
+  user_net:
+  post_net:
+  offer_net:
+  route_net:
+

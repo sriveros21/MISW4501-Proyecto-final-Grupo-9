@@ -1,0 +1,71 @@
+###################################
+# native-mangement
+###################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: native-management
+  labels:
+    app: native-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: native-management
+  template:
+    metadata:
+      labels:
+        app: native-management
+    spec:
+      containers:
+        - name: native-management
+          image: ghcr.io/misw-4301-desarrollo-apps-en-la-nube/true-native:2.0.0
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "500m"
+            limits:
+              memory: "256Mi"
+              cpu: "1000m"
+          env:
+            - name: USERS_PATH
+              value: http://service-user-management
+            - name: SECRET_TOKEN
+              value: qwerty
+            - name: MAX_WEBHOOK_DELAY
+              value: "50"
+            - name: MAX_POLL_DELAY
+              value: "20"
+            - name: SUCCESS_RATE
+              value: "80"
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: native-management-config
+spec:
+  healthCheck:
+    checkIntervalSec: 30
+    port: 3000
+    type: HTTP
+    requestPath: /native/ping
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: servicio-native-management
+  annotations:
+    cloud.google.com/backend-config: '{"default": "native-management-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: native-management
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 31300

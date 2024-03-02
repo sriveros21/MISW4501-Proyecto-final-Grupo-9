@@ -10,7 +10,7 @@ import os
 from ..models.user import UserSchema
 
 
-user_schema=UserSchema()
+user_schema = UserSchema()
 users_blueprint = Blueprint('users', __name__)
 
 
@@ -18,7 +18,7 @@ users_blueprint = Blueprint('users', __name__)
 @users_blueprint.route('/users', methods = ['POST'])
 def create_user():
     json = request.get_json()
-    fields_request=['username','password','email','dni','fullName','phoneNumber']
+    fields_request = ['username','password','email','dni','fullName','phoneNumber']
 
     for field in fields_request:
         if field not in json:

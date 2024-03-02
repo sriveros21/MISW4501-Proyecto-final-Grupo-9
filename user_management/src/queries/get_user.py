@@ -1,4 +1,4 @@
-from .base_command import BaseCommannd
+from ...src.commands.base_command import BaseCommannd
 from ..errors.errors import NoTokenGetUser, InvalidTokenGetUser
 
 from ..models.database import db_session

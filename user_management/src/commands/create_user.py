@@ -1,12 +1,10 @@
 from .base_command import BaseCommannd
-from ..errors.errors import InvalidParams,EmailUsernameExist
-
+from ..errors.errors import InvalidParams, EmailUsernameExist
 from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
-#
-from ..models.database import db_session, init_db
+from ..models.database import db_session #, init_db
 from ..models.user import User
-import os, requests, uuid
+# import os, requests, uuid
 
 
 class CreateUser(BaseCommannd):

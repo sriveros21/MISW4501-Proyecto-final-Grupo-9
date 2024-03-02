@@ -4,12 +4,15 @@ from .api.users import users_api
 from .errors.errors import ApiError
 import os
 from .models.database import init_db
+from .models.database_queries import init_db_queries
+
 
 loaded = load_dotenv('.env.development')
 
 
 app = Flask(__name__)
 app.register_blueprint(users_api)
+init_db_queries()
 init_db()
 
 @app.errorhandler(ApiError)

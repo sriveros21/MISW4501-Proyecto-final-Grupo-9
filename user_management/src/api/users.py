@@ -2,7 +2,7 @@ from flask import jsonify, request, Blueprint
 from ..commands.create_user import CreateUser
 # from ..commands.update_user import UpdateUser
 # from ..commands.generate_token import GenerateToken
-# from ..queries.get_user import GetUser
+from ..queries.get_user import GetUser
 # from ..queries.health_user import PingCommand
 # from ..commands.reset_user import ResetUserDataBase
 # from ..commands.update_user_native import UpdateUserNative
@@ -66,18 +66,20 @@ def create_user():
 #     return jsonify(result),200
 
 
-# # 4. Consultar información del usuario
-# @users_api.route('/users/me', methods = ['GET'])
-# def get_user():
-#    token_bearer=request.headers.get('Authorization')
+# 4. Consultar información del usuario
+@users_api.route('/api/user/me', methods = ['GET'])
+def get_user():
+   token_bearer=request.headers.get('Authorization')
 
-#    if token_bearer is None:
-#        token=""
-#    else:
-#        token=token_bearer.replace('Bearer ', '')
+   if token_bearer is None:
+       token=""
+   else:
+       token=token_bearer.replace('Bearer ', '')
 
-#    result = GetUser(token).execute()
-#    return jsonify(result),200
+
+   print ("El token :::> " , token) 
+   result = GetUser(token).execute()
+   return jsonify(result),200
 
 
 # # 5. Consultar salud del servicio

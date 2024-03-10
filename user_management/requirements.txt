@@ -12,3 +12,5 @@ pytest-cov
 pytest-mock
 pytest-env
 bcrypt
+google-cloud-pubsub
+Flask[async]

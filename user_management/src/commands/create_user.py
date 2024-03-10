@@ -4,6 +4,8 @@ from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
 from ..models.database import db_session #, init_db
 from ..models.user import User
+import asyncio
+from google.cloud import pubsub_v1
 # import os, requests, uuid
 
 
@@ -16,6 +18,7 @@ class CreateUser(BaseCommannd):
     self.fullName=fullName
     self.phoneNumber=phoneNumber
 
+  # async def execute(self):
   def execute(self):
     u = User(self.username, self.email, self.phoneNumber, self.dni, self.fullName, self.password,"POR_VERIFICAR")
     db_session.add(u)
@@ -25,10 +28,11 @@ class CreateUser(BaseCommannd):
     
     else:
       try:
+        # await db_session.commit()
         db_session.commit()
         response={"id":u.id, "createdAt":u.createdAt}
         db_session.close()
-        #Funcion - Native/Verifiy.
+        # Funcion - Native/Verifiy.
         # CreateUser.CreateTaskVerify(self, str(u.id))
 
         return response

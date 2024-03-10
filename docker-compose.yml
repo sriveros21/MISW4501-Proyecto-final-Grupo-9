@@ -97,18 +97,54 @@ services:
   #     - post_net
       
 
+  # database_user_old:
+  #   image: postgres:16.2
+  #   container_name: user_container
+  #   environment:
+  #     POSTGRES_DB: database_user
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: nativa1234
+  #   ports:
+  #     - 5435:5432
+  #   networks:
+  #     - user_net
 
+  #   healthcheck:
+  #         test: ["CMD-SHELL", "pg_isready -U postgres -d database_user"]
+  #         interval: 5s
+  #         timeout: 10s
+  #         retries: 5
 
   database_user:
-    image: postgres:13
-    container_name: user_container
+    image: postgres:16.2
+    container_name: sportapp_container
     environment:
       POSTGRES_DB: database_user
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: nativa1234
+      POSTGRES_PASSWORD: sa123456
+      POSTGRES_INITDB_ARGS: "--listen-addresses='*'"
+    ports:
+      - 5436:5432
     networks:
       - user_net
+    healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres -d database_user"]
+          interval: 5s
+          timeout: 10s
+          retries: 5
 
+  database_user_queries:
+    image: postgres:16.2
+    container_name: sportapp_container_queries
+    environment:
+      POSTGRES_DB: database_user_queries
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sa123456
+      POSTGRES_INITDB_ARGS: "--listen-addresses='*'"
+    ports:
+      - 5439:5432
+    networks:
+      - user_net
     healthcheck:
           test: ["CMD-SHELL", "pg_isready -U postgres -d database_user"]
           interval: 5s

@@ -1,5 +1,5 @@
-from .base_command import BaseCommannd
+from ..queries.base_queries import BaseQueries
 
-class PingCommand(BaseCommannd):
+class PingCommand(BaseQueries):
   def execute(self):
     return "pong"

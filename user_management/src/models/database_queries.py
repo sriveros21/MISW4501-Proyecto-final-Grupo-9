@@ -13,7 +13,7 @@ if os.environ.get("DATABASE_URL") is None:
     password = os.environ["DB_PASSWORD"]
     host = os.environ["DB_HOST"]
     dbname = os.environ["DB_NAME_QUERIES"]
-    port_db=os.environ["DB_PORT"]
+    port_db=os.environ["DB_PORT_QUERIES"]
     urldb = 'postgresql://' + userdb + ':' + password + '@' + host+ ':' +port_db + '/' + dbname
 else:
     urldb = os.environ.get("DATABASE_URL")

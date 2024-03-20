@@ -1,7 +1,7 @@
 # Define la etiqueta que activa el trigger.
-trigger:
-  tags:
-    - release-user 
+# trigger:
+#   tags:
+#     - release-user 
 
 steps:
 # Paso 1: Construir la imagen de Docker

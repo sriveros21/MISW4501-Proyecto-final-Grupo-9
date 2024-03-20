@@ -39,6 +39,7 @@ async def create_user_ps():
             json[field]=""
     
     # Opcion 1: Ejecutar el comando de forma sincrónica
+    # Opcion 1.1: Ejecutar el comando de forma comentarios para push
     create_user_command  = CreateUserPubSub(json['username'],json['password'],json['email'],json['dni'],json['fullName'],json['phoneNumber'])    
     #return "Mensaje creado en pub/sub satisfactoriamente.", 201
 

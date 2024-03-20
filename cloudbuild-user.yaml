@@ -2,7 +2,6 @@
 # trigger:
 #   tags:
 #     - release-user 
-
 steps:
 # Paso 1: Construir la imagen de Docker
   - name: 'gcr.io/cloud-builders/docker'

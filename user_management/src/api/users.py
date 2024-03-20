@@ -45,6 +45,7 @@ async def create_user_ps():
 
         # Ejecuta el comando asincrónico y espera la respuesta
     try:
+        
         response = await create_user_command.execute()
         return response, 201
     except Exception as e:

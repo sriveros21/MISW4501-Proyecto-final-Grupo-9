@@ -15,6 +15,5 @@ steps:
     - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-proyecto-final'
   
 options:
-  build:
-    default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
+  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
   substitution_option: ALLOW_LOOSE

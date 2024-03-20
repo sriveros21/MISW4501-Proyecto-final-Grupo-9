@@ -47,9 +47,9 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: user-management
-  minReplicas: 2
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 50  # Adjust as needed
+  minReplicas: 1 #2
+  maxReplicas: 1 #10
+  targetCPUUtilizationPercentage: 80  # Adjust as needed
 ---
 apiVersion: cloud.google.com/v1
 kind: BackendConfig

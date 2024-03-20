@@ -2,14 +2,15 @@ steps:
 # Paso 1: Construir la imagen de Docker
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'us-east1-docker.pkg.dev/proyecto-final-miso-416801/docker-images/user_management:latest', '.']
-
+```
 # Paso 2: Subir la imagen a Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-east1-docker.pkg.dev/proyecto-final-miso-416801/docker-images/user_management:latest']
-
+```
 # Paso 3: Aplicar el archivo de configuración de Kubernetes
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'deployment/k8s-services-ms-user.yaml']
     env:
     - 'CLOUDSDK_COMPUTE_ZONE=us-east1'
     - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-proyecto-final'
+```

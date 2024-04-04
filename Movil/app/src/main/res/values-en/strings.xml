@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SportApp</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="prompt_textlogin">Start Session</string>
+    <string name="prompt_usuario">User:</string>
+    <string name="prompt_password">Password:</string>
+    <string name="action_sign_in">Login</string>s
+</resources>

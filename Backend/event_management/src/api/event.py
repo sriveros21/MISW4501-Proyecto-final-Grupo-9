@@ -15,6 +15,43 @@ def create_event():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
+@event_blueprint.route('/events', methods=['GET'])
+def get_events():
+    events = Event.query.all()
+    events_data = [{
+        'id': event.id,
+        'name': event.name,
+        'description': event.description,
+        'event_date': event.event_date.strftime('%Y-%m-%dT%H:%M:%S'),
+        'duration': event.duration,
+        'location': event.location,
+        'category': event.category,
+        'fee': event.fee,
+        'additional_info': event.additional_info
+    } for event in events]
+
+    return jsonify(events_data), 200
+
+@event_blueprint.route('/events/<int:event_id>', methods=['GET'])
+def get_event(event_id):
+    event = Event.query.get(event_id)
+    if not event:
+        return jsonify({'error': 'Event not found'}), 404
+
+    event_data = {
+        'id': event.id,
+        'name': event.name,
+        'description': event.description,
+        'event_date': event.event_date.strftime('%Y-%m-%dT%H:%M:%S'),
+        'duration': event.duration,
+        'location': event.location,
+        'category': event.category,
+        'fee': event.fee,
+        'additional_info': event.additional_info
+    }
+
+    return jsonify(event_data), 200
+
 @event_blueprint.route('/events/<int:event_id>', methods=['PUT'])
 def update_event(event_id):
     data = request.json

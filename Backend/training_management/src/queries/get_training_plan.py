@@ -5,7 +5,7 @@ class GetTrainingPlanQueryHandler:
         plan = TrainingPlan.query.filter_by(id=plan_id).first()
         return {
             "id": plan.id,
-            "name": plan.name,
+            "description": plan.description,
             "exercises": plan.exercises,
             "duration": plan.duration,
             "frequency": plan.frequency,

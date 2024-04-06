@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
+from commands.update_event import UpdateEventCommandHandler
 from commands.create_event import CreateEventCommandHandler
-from models.event import Event, db
-from datetime import datetime
+from queries.get_events import GetEventsQueryHandler
+from queries.get_event import GetEventQueryHandler
 
 event_blueprint = Blueprint('event', __name__)
 
@@ -17,67 +18,25 @@ def create_event():
 
 @event_blueprint.route('/events', methods=['GET'])
 def get_events():
-    events = Event.query.all()
-    events_data = [{
-        'id': event.id,
-        'name': event.name,
-        'description': event.description,
-        'event_date': event.event_date.strftime('%Y-%m-%dT%H:%M:%S'),
-        'duration': event.duration,
-        'location': event.location,
-        'category': event.category,
-        'fee': event.fee,
-        'additional_info': event.additional_info
-    } for event in events]
-
+    handler = GetEventsQueryHandler()
+    events_data = handler.handle()
     return jsonify(events_data), 200
 
 @event_blueprint.route('/events/<int:event_id>', methods=['GET'])
 def get_event(event_id):
-    event = Event.query.get(event_id)
-    if not event:
+    handler = GetEventQueryHandler()
+    event_data = handler.handle(event_id)
+    if not event_data:
         return jsonify({'error': 'Event not found'}), 404
-
-    event_data = {
-        'id': event.id,
-        'name': event.name,
-        'description': event.description,
-        'event_date': event.event_date.strftime('%Y-%m-%dT%H:%M:%S'),
-        'duration': event.duration,
-        'location': event.location,
-        'category': event.category,
-        'fee': event.fee,
-        'additional_info': event.additional_info
-    }
-
     return jsonify(event_data), 200
 
 @event_blueprint.route('/events/<int:event_id>', methods=['PUT'])
 def update_event(event_id):
     data = request.json
-    handler = CreateEventCommandHandler()
+    handler = UpdateEventCommandHandler()
     
-    event = Event.query.get(event_id)
-    if not event:
-        return jsonify({"error": "Event not found"}), 404
-
-    # Check if the event start date has already passed
-    if datetime.now() >= event.event_date:
-        return jsonify({"error": "Cannot edit past events"}), 400
-
     try:
-        handler.validate_data(data)  # Validate mandatory fields
-        if 'event_date' in data:
-            if isinstance(data['event_date'], str):
-                data['event_date'] = datetime.strptime(data['event_date'], '%Y-%m-%dT%H:%M:%S')
-        handler.check_overlap(data, event_id)  # Check for overlapping events
-
-        # Update event attributes
-        for key, value in data.items():
-            setattr(event, key, value)
-        
-        db.session.commit()
-        return jsonify({"message": "Event updated successfully", "event_id": event.id}), 200
+        updated_event_id = handler.handle(event_id, data)
+        return jsonify({"message": "Event updated successfully", "event_id": updated_event_id}), 200
     except ValueError as e:
-        db.session.rollback()
         return jsonify({"error": str(e)}), 400

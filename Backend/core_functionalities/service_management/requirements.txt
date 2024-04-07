@@ -1,0 +1,21 @@
+marshmallow
+sqlalchemy
+wheel
+flask
+Flask-Migrate
+python-abc
+python-dotenv
+psycopg2-binary
+requests
+exceptiongroup
+pytest
+pytest-cov
+pytest-mock
+pytest-env
+bcrypt
+<<<<<<< HEAD
+google-cloud-pubsub
+Flask[async]
+=======
+google-cloud-pubsub
+>>>>>>> Experimentando-Funciones

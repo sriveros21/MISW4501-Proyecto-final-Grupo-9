@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -89,43 +90,44 @@
             android:layout_weight="1">
             <!-- Aquí coloca el contenido principal de tu vista -->
 
-            <TextView
-                android:id="@+id/tvwWelcome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="140dp"
-                android:fontFamily="@font/lato_bold_font"
-                android:text="Bienvenido, Rodolfo! "
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="22dp"
-                app:layout_constraintBottom_toBottomOf="@+id/editTextText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.587"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
 
             <LinearLayout
-                android:layout_width="260dp"
-                android:layout_height="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="490dp"
-                android:background="@color/backmenuppal"
+                android:layout_marginTop="0dp"
                 android:orientation="horizontal">
 
                 <!-- Imagen en la parte inferior -->
                 <ImageView
                     android:id="@+id/imgStrava"
-                    android:layout_width="263dp"
-                    android:layout_height="34dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="50dp"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/logostrava" />
-
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSendStrava"
+                android:layout_width="226dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="100dp"
+                android:background="@drawable/button_background"
+
+                android:enabled="true"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="@string/action_send_strava"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.529"
+                app:layout_constraintStart_toStartOf="parent" />
+
 
         </FrameLayout>
 
@@ -195,3 +197,5 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

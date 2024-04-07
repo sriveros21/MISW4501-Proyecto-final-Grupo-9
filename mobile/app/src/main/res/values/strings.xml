@@ -7,5 +7,5 @@
     <string name="prompt_usuario">Usuario:</string>
     <string name="prompt_password">Contraseña:</string>
     <string name="action_sign_in">Continuar</string>
-
+    <string name="action_send_strava">Enviar Datos</string>
 </resources>

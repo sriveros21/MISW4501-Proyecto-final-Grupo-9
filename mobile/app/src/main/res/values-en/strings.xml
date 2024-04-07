@@ -7,5 +7,6 @@
     <string name="prompt_textlogin">Start Session</string>
     <string name="prompt_usuario">User:</string>
     <string name="prompt_password">Password:</string>
-    <string name="action_sign_in">Login</string>s
+    <string name="action_sign_in">Login</string>
+    <string name="action_send_strava">Send Data</string>
 </resources>

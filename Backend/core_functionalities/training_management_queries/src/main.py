@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from flask import Flask, jsonify
-from .api.training_api import training_api
+from .api.training_api import training_api, training_plan_blueprint
 # from .user_events.create_user_event import subscribe_to_pubsub
 # from .errors.errors import ApiError
 # import os
@@ -13,6 +13,7 @@ loaded = load_dotenv('.env.development')
 
 app = Flask(__name__)
 app.register_blueprint(training_api)
+app.register_blueprint(training_plan_blueprint)
 init_db_queries()
 
 

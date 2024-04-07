@@ -13,7 +13,7 @@ services:
       - tmq_net
 
     healthcheck:
-          test: ["CMD-SHELL", "pg_isready -U postgres -d database_route"]
+          test: ["CMD-SHELL", "pg_isready -U postgres -d db_training_management"]
           interval: 5s
           timeout: 10s
           retries: 5
@@ -32,6 +32,53 @@ services:
       DATABASE_URL: postgresql://postgres:tmqUnoDos@db_training_management:5432/db_training_management
     networks:
       - tmq_net
+
+
+  db_event_management:
+    image: postgres:13
+    container_name: db_em
+    environment:
+      POSTGRES_DB: db_event_management
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: emUnoDos
+    networks:
+      - em_net
+
+    healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres -d db_event_management"]
+          interval: 5s
+          timeout: 10s
+          retries: 5
+
+  db_event_management_commands:
+    build:
+      context: ./core_functionalities/event_management_commands
+    container_name: event_management_commands_container
+    ports:
+      - "3001:3001"
+    depends_on:
+      db_event_management:
+        condition: service_healthy
+
+    environment:
+      DATABASE_URL: postgresql://postgres:emUnoDos@db_event_management:5432/db_event_management
+    networks:
+      - em_net
+
+  db_event_management_queries:
+    build:
+      context: ./core_functionalities/event_management_queries
+    container_name: event_management_queries_container
+    ports:
+      - "3002:3002"
+    depends_on:
+      db_event_management:
+        condition: service_healthy
+
+    environment:
+      DATABASE_URL: postgresql://postgres:emUnoDos@db_event_management:5432/db_event_management
+    networks:
+      - em_net
       
 
   # database_offer:
@@ -167,7 +214,7 @@ services:
 networks:
   # app_net:
   tmq_net:
-  # post_net:
+  em_net:
   # offer_net:
   # route_net:
 

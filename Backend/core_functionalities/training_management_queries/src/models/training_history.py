@@ -1,6 +1,5 @@
 from marshmallow import Schema, fields
 from  sqlalchemy  import  Column, String, DateTime
-# from .model  import  Model
 from .database_queries import Base
 import uuid
 from sqlalchemy.dialects.postgresql import UUID

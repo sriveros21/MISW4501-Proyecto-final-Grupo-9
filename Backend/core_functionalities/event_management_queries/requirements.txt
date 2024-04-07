@@ -2,7 +2,8 @@ marshmallow
 sqlalchemy
 wheel
 flask
-Flask-Migrate
+Flask-SQLAlchemy
+# Flask-Migrate
 python-abc
 python-dotenv
 psycopg2-binary
@@ -12,10 +13,4 @@ pytest
 pytest-cov
 pytest-mock
 pytest-env
-bcrypt
-<<<<<<< HEAD
-google-cloud-pubsub
-Flask[async]
-=======
-google-cloud-pubsub
->>>>>>> Experimentando-Funciones
+# bcrypt

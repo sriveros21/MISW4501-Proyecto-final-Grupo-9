@@ -1,4 +1,4 @@
-from models.training_plan import TrainingPlan
+from ..models.training_plan import TrainingPlan
 
 class GetTrainingPlanQueryHandler:
     def handle(self, plan_id):

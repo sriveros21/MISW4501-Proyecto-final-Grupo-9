@@ -1,4 +1,4 @@
-from models.event import Event
+from ..models.event import Event
 
 class GetEventQueryHandler:
     def handle(self, event_id):

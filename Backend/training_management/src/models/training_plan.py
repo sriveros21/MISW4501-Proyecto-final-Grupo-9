@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from extensions import db
+from ..extensions import db
 
 class TrainingPlan(db.Model):
     id = db.Column(db.Integer, primary_key=True)

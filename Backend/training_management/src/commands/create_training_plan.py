@@ -1,4 +1,4 @@
-from models.training_plan import TrainingPlan, db
+from ..models.training_plan import TrainingPlan, db
 
 class CreateTrainingPlanCommandHandler:
     def handle(self, data):

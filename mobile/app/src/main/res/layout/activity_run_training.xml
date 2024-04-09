@@ -125,7 +125,7 @@ android:background="@color/backcolorapp">
 
 
         <Button
-            android:id="@+id/btnStartTraining"
+            android:id="@+id/btnStart"
             android:layout_width="226dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom|center"

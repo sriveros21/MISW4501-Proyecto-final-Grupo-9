@@ -10,5 +10,5 @@
     <string name="action_send_strava">Enviar Datos</string>
     <string name="type_training">Tipo: </string>
     <string name="start_training">Iniciar</string>
-    <string name="stop_training">Detener</string>
+    <string name="stop_training">Finalizar</string>
 </resources>

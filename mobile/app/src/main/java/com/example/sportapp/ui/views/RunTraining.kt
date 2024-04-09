@@ -1,5 +1,6 @@
 package com.example.sportapp.ui.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
@@ -8,29 +9,36 @@ import android.widget.Chronometer
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.sportapp.R
+import com.example.sportapp.ui.home.Home
 
 class RunTraining : AppCompatActivity() {
 
     private lateinit var chronometer: Chronometer
     private lateinit var startButton: Button
     private var isChronometerRunning: Boolean = false
-    val tvwTypeRun = findViewById<TextView>(R.id.tvwTypeRun)
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_start_training)
+        setContentView(R.layout.activity_run_training)
+
+        val tvwTypeRun = findViewById<TextView>(R.id.tvwTypeRun)
+        val btnHome = findViewById<ImageView>(R.id.ivHome)
+
+        btnHome.setOnClickListener{
+            val home = Intent(this, Home::class.java)
+            startActivity(home)
+        }
 
         val valorRecibido = intent.getStringExtra("training")
 
         tvwTypeRun.text = getString(R.string.type_training)  + " " + valorRecibido
 
         chronometer = findViewById(R.id.chronometer)
-        startButton = findViewById(R.id.btnStartTraining)
+        startButton = findViewById(R.id.btnStart)
 
-        // Asignar el método startChronometer al evento onClick del botón
         startButton.setOnClickListener { startChronometer(it) }
     }
 
@@ -47,6 +55,7 @@ class RunTraining : AppCompatActivity() {
         } else {
             // Detener el cronómetro
             chronometer.stop()
+            chronometer.pause()
 
             // Cambiar el texto del botón a "Iniciar"
             startButton.text = getString(R.string.start_training)

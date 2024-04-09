@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sportapp.LoginScreen
 import com.example.sportapp.R
 import com.example.sportapp.ui.views.StartTraining
 import com.example.sportapp.ui.views.StravaViewConnect
@@ -15,7 +16,7 @@ class Home : AppCompatActivity() {
         // String appName = getString(R.string.app_name)
         val btnStrava = findViewById<ImageView>(R.id.imgStrava)
         val btnRunExe = findViewById<ImageView>(R.id.ivRunExe)
-
+        val btnExit = findViewById<ImageView>(R.id.ivHome)
 
         //Redirige a la Actividad Strava.
         btnStrava.setOnClickListener{
@@ -28,6 +29,13 @@ class Home : AppCompatActivity() {
             val startTraining = Intent(this, StartTraining::class.java)
             startActivity(startTraining)
         }
+
+        //Redirige a la Actividad Iniciar Entrenamiento.
+        btnExit.setOnClickListener{
+            val exitApp = Intent(this, LoginScreen::class.java)
+            startActivity(exitApp)
+        }
+
     }
 
 

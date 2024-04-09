@@ -14,17 +14,38 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportapp.R
+import com.example.sportapp.ui.home.Home
 
 class StartTraining : AppCompatActivity() {
 
     private lateinit var chronometer: Chronometer
-    private lateinit var startButton: Button
-    private var isChronometerRunning: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_training)
-        val btnStart = findViewById<ImageView>(R.id.ivRunExe)
+
+        val ivRunExe = findViewById<ImageView>(R.id.ivRunExe)
+        val ivHome = findViewById<ImageView>(R.id.ivHome)
+        val btnIniciar = findViewById<Button>(R.id.btnStartTraining)
+
+
+        btnIniciar.setOnClickListener{
+            val runTra = Intent(this, RunTraining::class.java)
+            runTra.putExtra("training", "Natacion")
+            startActivity(runTra)
+        }
+
+        ivHome.setOnClickListener{
+            val home = Intent(this, Home::class.java)
+            startActivity(home)
+        }
+
+        ivRunExe.setOnClickListener{
+            val startTra = Intent(this, StartTraining::class.java)
+            startActivity(startTra)
+        }
+
+
 
         //Inicializa datos de entrenamiento.
         val dataList = listOf("Natacion", "Ciclismo", "Running") // Lista de datos
@@ -33,17 +54,8 @@ class StartTraining : AppCompatActivity() {
         recyclerView.adapter = MyAdapter(dataList)
 
         chronometer = findViewById(R.id.chronometer)
-        // Asignar el método startChronometer al evento onClick del botón
 
-
-        btnStart.setOnClickListener{
-            val startTraining = Intent(this, RunTraining::class.java)
-            startTraining.putExtra("training", "Natacion")
-            startActivity(startTraining)
-        }
     }
-
-
 
     private class MyAdapter(private val dataList: List<String>) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 

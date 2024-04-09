@@ -11,5 +11,5 @@
     <string name="action_send_strava">Send Data</string>
     <string name="type_training">Type: </string>
     <string name="start_training">Start</string>
-    <string name="stop_training">Stop</string>
+    <string name="stop_training">Finish</string>
 </resources>

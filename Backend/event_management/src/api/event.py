@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
-from commands.update_event import UpdateEventCommandHandler
-from commands.create_event import CreateEventCommandHandler
-from queries.get_events import GetEventsQueryHandler
-from queries.get_event import GetEventQueryHandler
+from ..commands.update_event import UpdateEventCommandHandler
+from ..commands.create_event import CreateEventCommandHandler
+from ..queries.get_events import GetEventsQueryHandler
+from ..queries.get_event import GetEventQueryHandler
 
 event_blueprint = Blueprint('event', __name__)
 

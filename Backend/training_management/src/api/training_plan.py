@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from commands.create_training_plan import CreateTrainingPlanCommandHandler
-from queries.get_training_plan import GetTrainingPlanQueryHandler
+from ..commands.create_training_plan import CreateTrainingPlanCommandHandler
+from ..queries.get_training_plan import GetTrainingPlanQueryHandler
 
 training_plan_blueprint = Blueprint('training_plan', __name__)
 

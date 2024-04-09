@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from models.event import Event, db
+from ..models.event import Event, db
 from sqlalchemy.exc import IntegrityError
 
 class UpdateEventCommandHandler:

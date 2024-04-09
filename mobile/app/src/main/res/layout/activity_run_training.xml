@@ -144,7 +144,6 @@ android:background="@color/backcolorapp">
             app:layout_constraintStart_toStartOf="parent" />
 
 
-
     </FrameLayout>
 
     <FrameLayout

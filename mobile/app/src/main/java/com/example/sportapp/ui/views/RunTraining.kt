@@ -17,8 +17,7 @@ class RunTraining : AppCompatActivity() {
     private lateinit var chronometer: Chronometer
     private lateinit var startButton: Button
     private var isChronometerRunning: Boolean = false
-
-
+    private var valorTraining: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,20 +31,23 @@ class RunTraining : AppCompatActivity() {
             startActivity(home)
         }
 
-        val valorRecibido = intent.getStringExtra("training")
-
-        tvwTypeRun.text = getString(R.string.type_training)  + " " + valorRecibido
-
+        valorTraining = intent.getStringExtra("training").toString()
+        tvwTypeRun.text = getString(R.string.type_training)  + " " + valorTraining
         chronometer = findViewById(R.id.chronometer)
         startButton = findViewById(R.id.btnStart)
 
-        startButton.setOnClickListener { startChronometer(it) }
+        startButton.setOnClickListener { startChronometer() }
+
+        startChronometer()
     }
 
-    fun startChronometer(view: View) {
+
+
+    fun startChronometer() {
         if (!isChronometerRunning) {
             // Hacer visible el cronómetro y comenzar a contar
             chronometer.visibility = View.VISIBLE
+            //chronometer.format = "HH:mm:ss"
             chronometer.base = SystemClock.elapsedRealtime()
             chronometer.start()
 
@@ -55,11 +57,21 @@ class RunTraining : AppCompatActivity() {
         } else {
             // Detener el cronómetro
             chronometer.stop()
-            chronometer.pause()
-
+            val tiempoDetenido = chronometer.text.toString()
             // Cambiar el texto del botón a "Iniciar"
             startButton.text = getString(R.string.start_training)
             isChronometerRunning = false
+
+            //LLamar la nueva vista y pasar los parametros.
+            finishTrainingActivity(tiempoDetenido)
+
         }
+    }
+
+    private fun finishTrainingActivity(tiempoDetenido: String) {
+        val finishTra = Intent(this, FinishTraining::class.java)
+        finishTra.putExtra("timeTraining", tiempoDetenido)
+        finishTra.putExtra("valorTraining", valorTraining)
+        startActivity(finishTra)
     }
 }

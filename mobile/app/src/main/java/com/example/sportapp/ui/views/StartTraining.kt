@@ -67,6 +67,7 @@ class StartTraining : AppCompatActivity() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = dataList[position]
             holder.textViewItem.text = item
+
         }
 
         override fun getItemCount(): Int {

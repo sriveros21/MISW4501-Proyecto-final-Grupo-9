@@ -12,4 +12,11 @@
     <string name="type_training">Type: </string>
     <string name="start_training">Start</string>
     <string name="stop_training">Finish</string>
+    <string name="prompt_completed_training">Training finished!!!</string>
+    <string name="prompt_total_time">Total time:</string>
+    <string name="prompt_date_training">Date:</string>
+    <string name="prompt_cal_training">Calories:</string>
+    <string name="prompt_ftp_training">FTP:</string>
+    <string name="prompt_vo2_training">VO2max:</string>
+    <string name="save_training">Save Training</string>
 </resources>

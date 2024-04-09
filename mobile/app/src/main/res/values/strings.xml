@@ -18,6 +18,9 @@
     <string name="prompt_ftp_training">FTP:</string>
     <string name="prompt_vo2_training">VO2max:</string>
     <string name="save_training">Guardar Entrenamiento:</string>
-
+    <string name="calendar_tittle">Calendario de eventos y entrenamientos</string>
+    <string name="calendar_event_field">Evento</string>
+    <string name="calendar_date_field">Fecha</string>
+    <string name="calendar_description_field">Descripción</string>
 
 </resources>

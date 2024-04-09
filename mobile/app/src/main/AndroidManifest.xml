@@ -19,6 +19,11 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.views.CalendarEvents"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <activity
             android:name=".ui.views.FinishTraining"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

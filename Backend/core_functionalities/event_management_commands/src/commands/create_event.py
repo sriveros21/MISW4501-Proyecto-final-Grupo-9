@@ -33,7 +33,7 @@ class CreateEventCommandHandler:
             Event.location == data['location'],
             Event.id != event_id,  # Exclude the current event if updating
             Event.event_date <= event_end,
-            Event.event_date >= event_start - timedelta(hours=24) # Consider a 24-hour buffer before the event
+            Event.event_date >= event_start - timedelta(hours=24) # Considering a 24-hour buffer before the event
         ).all()
 
         # Now filter in Python to check for actual overlap
@@ -49,13 +49,11 @@ class CreateEventCommandHandler:
         self.check_overlap(data)
         
         try:
-            #if 'event_date' in data and isinstance(data['event_date'], datetime):
-            #    data['event_date'] = datetime.strptime(data['event_date'], '%Y-%m-%dT%H:%M:%S')
             event = Event(**data)
             db.session.add(event)
             db.session.commit()
 
-            # Before sending data to Kafka, ensure event_date is a string
+            # Before sending data to Kafka, ensuring event_date is a string
             kafka_data = data.copy()
             kafka_data['event_date'] = kafka_data['event_date'].isoformat() if 'event_date' in kafka_data else None
 

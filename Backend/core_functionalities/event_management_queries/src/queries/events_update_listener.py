@@ -15,17 +15,11 @@ class EventUpdatesListener:
                                       group_id='events-consumer',
                                       value_deserializer=lambda m: json.loads(m.decode('utf-8')))
     
-    # @contextmanager
-    # def app_context(self):
-    #     # Context manager to push/pop Flask app context
-    #     with self.app.app_context():
-    #         yield
-    
     def start_listening(self):
         # Use the stored app reference to push an application context
         with self.app.app_context():
             for message in self.consumer:
-                print(f"Received message: {message}")  # Ensure messages are received
+                print(f"Received message: {message}")  # Ensuring messages are received
                 if message.value['type'] == 'UserAddedToEvent':
                     self.process_user_added(message.value)
                 elif message.value['type'] == 'EventCreated':
@@ -33,7 +27,6 @@ class EventUpdatesListener:
 
     def process_user_added(self, message):
         # Logic to update the read model based on the received message
-        # This might involve adding the user to the attendees list for an event in the read database
         print(f"Processing message: {message}")
         event_id = message['event_id']
         user_id = message['user_id']
@@ -57,8 +50,6 @@ class EventUpdatesListener:
     def process_event_created(self, message):
         print(f"Processing EventCreated: {message}")
         event_data = message['data']
-        # Ensure event_data is properly formatted and includes all required fields
-        # You might need to adjust this depending on how data is serialized/deserialized
         
         # Parse the event_date from string to datetime object
         if 'event_date' in event_data and isinstance(event_data['event_date'], str):

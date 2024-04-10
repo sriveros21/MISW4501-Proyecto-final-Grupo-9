@@ -1,8 +1,5 @@
 from flask import Flask
-
 from .queries.events_update_listener import start_listener_in_background
-
-from .flask_command import start_kafka_listener_command
 from .extensions import db
 from .api.event import event_blueprint
 import os
@@ -35,7 +32,6 @@ def create_app():
     # Register blueprints
     app.register_blueprint(event_blueprint)
     start_listener_in_background(app)
-    app.cli.add_command(start_kafka_listener_command)
 
     return app
 

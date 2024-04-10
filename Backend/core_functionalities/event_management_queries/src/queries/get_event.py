@@ -4,7 +4,7 @@ class GetEventQueryHandler:
     def handle(self, event_id):
         event = Event.query.get(event_id)
         if not event:
-            return None  # Or raise an exception that can be caught and handled in the route
+            return None
 
         event_data = {
             'id': event.id,

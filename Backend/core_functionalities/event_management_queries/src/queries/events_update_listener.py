@@ -5,15 +5,29 @@ from ..models.event import Event, db
 from sqlalchemy.orm.attributes import flag_modified
 import json
 import threading
+import time
+from kafka.errors import NoBrokersAvailable
+
+def create_kafka_consumer():
+    for _ in range(5):  # Retry up to 5 times
+        try:
+            consumer = KafkaConsumer(
+                'event-updates',
+                bootstrap_servers=['kafka:9092'],
+                auto_offset_reset='earliest',
+                group_id='events-consumer',
+                value_deserializer=lambda m: json.loads(m.decode('utf-8'))
+            )
+            return consumer
+        except NoBrokersAvailable:
+            print("Waiting for Kafka to become available...")
+            time.sleep(5)  # Wait 5 seconds before retrying
+    raise Exception("Failed to connect to Kafka after several attempts.")
 
 class EventUpdatesListener:
     def __init__(self,app):
         self.app = app
-        self.consumer = KafkaConsumer('event-updates',
-                                      bootstrap_servers=['localhost:9092'],
-                                      auto_offset_reset='earliest',
-                                      group_id='events-consumer',
-                                      value_deserializer=lambda m: json.loads(m.decode('utf-8')))
+        self.consumer = create_kafka_consumer()
     
     def start_listening(self):
         # Use the stored app reference to push an application context

@@ -13,9 +13,5 @@ pytest-cov
 pytest-mock
 pytest-env
 bcrypt
-<<<<<<< HEAD
 google-cloud-pubsub
 Flask[async]
-=======
-google-cloud-pubsub
->>>>>>> Experimentando-Funciones

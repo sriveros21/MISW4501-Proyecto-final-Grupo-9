@@ -1,9 +1,6 @@
 from dotenv import load_dotenv
 from flask import Flask, jsonify
-from .api.training_api import training_api, training_plan_blueprint
-# from .user_events.create_user_event import subscribe_to_pubsub
-# from .errors.errors import ApiError
-# import os
+from .api.training_plan import training_api, training_plan_blueprint
 from .models.database_queries import init_db_queries, db_session_queries
 from .models.training_history import TrainingHistory
 
@@ -77,18 +74,8 @@ def insert_default_data():
 insert_default_data()
 
 
-# @app.errorhandler(ApiError)
-# def handle_exception(err):
-#     response = {
-#       "mssg": err.description,
-#       "version": os.environ["VERSION"]
-#     }
-#     return jsonify(response), err.code
-
-
 if __name__ == '__main__':
     
-    print("Esto entra aquí")
     insert_default_data()
     # project_id = 'proyecto-final-miso-416801'
     # subscription_name = 'evento-registrar-usuario'

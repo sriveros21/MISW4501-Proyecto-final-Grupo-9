@@ -1,13 +1,23 @@
 from flask import Flask
+from .extensions import db
+from .config import DevelopmentConfig, TestingConfig, ProductionConfig
 from api.training_plan import training_plan_blueprint
 
-def create_app():
+def create_app(config_object=None):
     app = Flask(__name__)
+    if config_object:
+        app.config.from_object(config_object)
+    else:
+        # Default to DevelopmentConfig if nothing is specified
+        app.config.from_object(DevelopmentConfig)
+    db.init_app(app)
     app.register_blueprint(training_plan_blueprint)
     return app
 
 if __name__ == "__main__":
     app = create_app()
+    with app.app_context():
+       db.create_all()  # Create database tables for our data models
     app.run(debug=True)
 
 

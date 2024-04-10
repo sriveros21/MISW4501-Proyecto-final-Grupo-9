@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from flask import Flask, jsonify
 # from .user_events.users import api_users
-from .user_events.create_user_event import subscribe_to_pubsub
+from .service_events.create_user_event import subscribe_to_pubsub
 from .errors.errors import ApiError
 import os
 from .models.database import init_db

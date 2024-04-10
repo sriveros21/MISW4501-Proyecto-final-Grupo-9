@@ -14,3 +14,5 @@ pytest-cov
 pytest-mock
 pytest-env
 # bcrypt
+Flask-Testing
+Flask-Migrate

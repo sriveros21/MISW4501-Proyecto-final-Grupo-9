@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from ..queries.get_events import GetEventsQueryHandler
 from ..queries.get_event import GetEventQueryHandler
+from ..queries.get_user_calendar import GetUserCalendarQueryHandler
 
 event_blueprint = Blueprint('event', __name__)
 
@@ -17,3 +18,9 @@ def get_event(event_id):
     if not event_data:
         return jsonify({'error': 'Event not found'}), 404
     return jsonify(event_data), 200
+
+@event_blueprint.route('/user/<int:user_id>/calendar', methods=['GET'])
+def get_user_calendar(user_id):
+    query = GetUserCalendarQueryHandler(user_id=user_id)
+    events = query.execute()
+    return jsonify(events), 200

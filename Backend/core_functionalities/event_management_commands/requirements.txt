@@ -16,3 +16,4 @@ pytest-env
 # bcrypt
 Flask-Testing
 Flask-Migrate
+kafka-python

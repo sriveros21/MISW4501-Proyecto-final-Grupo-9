@@ -1,14 +1,15 @@
+import os
+
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # Common config settings
+    # Common configuration settings
 
 class DevelopmentConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///training_development.db'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL','sqlite:///events_queries_development.db')
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:' # in-memory SQLite database for tests
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///training_production.db'
-    # Production config settings
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///events_queries__production.db')

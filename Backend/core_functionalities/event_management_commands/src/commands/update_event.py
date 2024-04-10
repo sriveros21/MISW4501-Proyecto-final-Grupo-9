@@ -22,12 +22,12 @@ class UpdateEventCommandHandler:
         # Fetch events that could potentially overlap
         potential_overlaps = Event.query.filter(
             Event.location == data['location'],
-            Event.id != event_id,  # Exclude the current event if updating
+            Event.id != event_id,  # Excluding the current event if updating
             Event.event_date <= event_end,
-            Event.event_date >= event_start - timedelta(hours=24) # Consider a 24-hour buffer before the event
+            Event.event_date >= event_start - timedelta(hours=24) # Considering a 24-hour buffer before the event
         ).all()
 
-        # Now filter in Python to check for actual overlap
+        # Checking for actual overlap
         for event in potential_overlaps:
             existing_event_end = event.event_date + timedelta(hours=event.duration)
             if existing_event_end > event_start and event.event_date < event_end:

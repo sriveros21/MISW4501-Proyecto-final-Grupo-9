@@ -1,0 +1,32 @@
+div {
+  background-color: #B6DBEF;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/assets/fonts/Lato-Regular.ttf') format('truetype');
+}
+
+h2{
+  font-size: 54px;
+  color: #00355F;
+  font-family: 'Lato', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+h1 {
+  position: absolute;
+  top: 80px;
+  left: 50px;
+  width: 100%;
+  margin: 0;
+}
+
+

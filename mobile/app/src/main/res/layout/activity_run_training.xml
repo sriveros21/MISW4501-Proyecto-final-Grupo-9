@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/backcolorapp">
+
+<LinearLayout
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="0dp"
+    tools:context=".HomeActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="92dp">
+
+    <FrameLayout
+        android:id="@+id/top_menu_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- Contenido del menu superior -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/backmenuppal"
+            android:stretchColumns="0,1,2,3">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ivSugerencias"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/sugerencias" />
+
+                <ImageView
+                    android:id="@+id/ivHome"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/home" />
+
+                <ImageView
+                    android:id="@+id/ivCalendar"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/calendario" />
+
+                <ImageView
+                    android:id="@+id/ivNotifications"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/notificaciones" />
+
+            </TableRow>
+        </TableLayout>
+    </FrameLayout>
+
+    <!-- Contenido principal de la vista -->
+
+    <FrameLayout
+        android:id="@+id/content_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <!-- Aquí coloca el contenido principal de tu vista -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="top"> <!-- Alineación vertical por la parte inferior -->
+
+            <!-- TextView -->
+            <TextView
+                android:id="@+id/tvwTypeRun"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type_training"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="22dp" />
+
+            <!-- RecyclerView -->
+
+        </LinearLayout>
+
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="00 : 00 : 00"
+            android:textColor="@color/white"
+            android:layout_marginTop="250dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="visible" />
+
+
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="226dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/button_background"
+
+            android:enabled="true"
+            android:fontFamily="@font/lato_bold_font"
+            android:text="@string/start_training"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.529"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/bottom_menu_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- Contenido del menu inferior -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/backmenuppal"
+            android:stretchColumns="0,1,2,3">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ivRun"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/run" />
+
+                <ImageView
+                    android:id="@+id/ivClockW"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/calend_clock" />
+
+                <ImageView
+                    android:id="@+id/ivRunExe"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/start_exe" />
+
+                <ImageView
+                    android:id="@+id/ivWatch"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/watch" />
+            </TableRow>
+        </TableLayout>
+    </FrameLayout>
+</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -90,13 +90,13 @@
             <!-- Aquí coloca el contenido principal de tu vista -->
 
             <TextView
-                android:id="@+id/tvwWelcome"
+                android:id="@+id/tvwEventsTittle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="140dp"
                 android:fontFamily="@font/lato_bold_font"
-                android:text="Bienvenido, Rodolfo! "
+                android:text="@string/calendar_tittle"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textStyle="bold"
@@ -107,23 +107,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
 
+
             <LinearLayout
-                android:layout_width="260dp"
-                android:layout_height="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="490dp"
-                android:background="@color/backmenuppal"
+                android:layout_marginTop="50dp"
+                android:background="@color/backcolorapp"
                 android:orientation="horizontal">
 
-                <!-- Imagen en la parte inferior -->
-                <ImageView
-                    android:id="@+id/imgStrava"
-                    android:layout_width="263dp"
-                    android:layout_height="34dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="0dp"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/logostrava" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvEvents"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical" />
 
             </LinearLayout>
 

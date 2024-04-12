@@ -90,13 +90,13 @@
             <!-- Aquí coloca el contenido principal de tu vista -->
 
             <TextView
-                android:id="@+id/tvwWelcome"
+                android:id="@+id/tvwTittle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="140dp"
                 android:fontFamily="@font/lato_bold_font"
-                android:text="Bienvenido, Rodolfo! "
+                android:text="@string/prompt_completed_training"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textStyle="bold"
@@ -107,25 +107,135 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
 
-            <LinearLayout
-                android:layout_width="260dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="490dp"
-                android:background="@color/backmenuppal"
-                android:orientation="horizontal">
 
-                <!-- Imagen en la parte inferior -->
-                <ImageView
-                    android:id="@+id/imgStrava"
-                    android:layout_width="263dp"
-                    android:layout_height="34dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="0dp"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/logostrava" />
+            <TextView
+                android:id="@+id/tvwType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="140dp"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="@string/type_training"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.587"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tvwTimeTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="160dp"
+                android:layout_marginBottom="140dp"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="@string/prompt_total_time"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.587"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
+
+
+            <TextView
+                android:id="@+id/tvwDateTraining"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="220dp"
+                android:layout_marginBottom="140dp"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="@string/prompt_date_training"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.587"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
+
+            <TextView
+                android:id="@+id/tvwCalTraining"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="280dp"
+                android:layout_marginBottom="140dp"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="@string/prompt_cal_training"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.587"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
+
+            <TextView
+                android:id="@+id/tvwFTP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="340dp"
+                android:layout_marginBottom="140dp"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="@string/prompt_ftp_training"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.587"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
+
+
+            <TextView
+                android:id="@+id/tvwVO2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="400dp"
+                android:layout_marginBottom="140dp"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="@string/prompt_vo2_training"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.587"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
+
+
+            <Button
+                android:id="@+id/btnStart"
+                android:layout_width="226dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="100dp"
+                android:background="@drawable/button_background"
+                android:enabled="true"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="@string/save_training"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.529"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </FrameLayout>
 

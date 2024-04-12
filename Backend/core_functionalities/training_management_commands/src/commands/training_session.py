@@ -43,7 +43,20 @@ class StopTrainingSessionCommandHandler:
             }
         }
         # Publish event to Kafka
-        self.producer.send('event-updates', value=event_data)
+        self.producer.send('training-events', value=event_data)
         self.producer.flush()
         
         return session.id
+    
+class ReceiveSessionDataCommandHandler:
+
+    def receive(self, data):
+        session = TrainingSession.query.get(data['session_id'])
+        if not session:
+            return {"error": "Session not found"}
+        # Update session with additional data
+        session.power_output = data.get('power_output', 0)
+        session.max_heart_rate = data.get('max_heart_rate', 0)
+        session.resting_heart_rate = data.get('resting_heart_rate', 0)
+        db.session.commit()
+        return {"message": "Session data updated successfully"}

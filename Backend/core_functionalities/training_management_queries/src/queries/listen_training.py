@@ -17,7 +17,7 @@ def create_kafka_consumer():
     for _ in range(5):  # Retry up to 5 times
         try:
             consumer = KafkaConsumer(
-                'event-updates',
+                'training-events',
                 #bootstrap_servers=['kafka:9092'],
                 bootstrap_servers=['localhost:9092'],
                 auto_offset_reset='earliest',

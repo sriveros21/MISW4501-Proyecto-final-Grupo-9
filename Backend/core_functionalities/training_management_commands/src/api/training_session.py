@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from ..commands.training_session import StartTrainingSessionCommandHandler, StopTrainingSessionCommandHandler
+from ..commands.training_session import StartTrainingSessionCommandHandler, StopTrainingSessionCommandHandler, ReceiveSessionDataCommandHandler
 
 training_session_blueprint = Blueprint('training_session', __name__)
 
@@ -17,3 +17,10 @@ def stop_training_session():
     handler = StopTrainingSessionCommandHandler()
     session_id = handler.stop(data)
     return jsonify({"message": "Training session stopped successfully", "session_id": session_id}), 200
+
+@training_session_blueprint.route('/receive_session-data', methods=['POST'])
+def submit_session_data():
+    data = request.json
+    handler = ReceiveSessionDataCommandHandler()
+    results = handler.receive(data)
+    return jsonify(results), 200

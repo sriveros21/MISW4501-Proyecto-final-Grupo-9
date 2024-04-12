@@ -8,16 +8,23 @@ import threading
 import time
 from kafka.errors import NoBrokersAvailable
 
+def json_deserializer(data):
+    try:
+        return json.loads(data.decode('utf-8'))
+    except json.JSONDecodeError:
+        print("Error decoding JSON")
+        return None
+    
 def create_kafka_consumer():
     for _ in range(5):  # Retry up to 5 times
         try:
             consumer = KafkaConsumer(
-                'event-updates',
+                'event-events',
                 #bootstrap_servers=['kafka:9092'],
                 bootstrap_servers=['localhost:9092'],
                 auto_offset_reset='earliest',
                 group_id='events-consumer',
-                value_deserializer=lambda m: json.loads(m.decode('utf-8'))
+                value_deserializer=json_deserializer
             )
             return consumer
         except NoBrokersAvailable:

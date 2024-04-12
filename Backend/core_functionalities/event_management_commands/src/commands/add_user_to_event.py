@@ -26,5 +26,5 @@ class AddUserToEventCommand:
             db.session.commit()
             # Publish an event to Kafka after updating the database
             message = {"event_id": self.event_id, "user_id": self.user_id, "type": "UserAddedToEvent"}
-            self.producer.send('event-updates', value=message)
+            self.producer.send('event-events', value=message)
             self.producer.flush()

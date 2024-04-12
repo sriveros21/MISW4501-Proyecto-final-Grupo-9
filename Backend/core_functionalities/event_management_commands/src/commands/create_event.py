@@ -64,7 +64,7 @@ class CreateEventCommandHandler:
                 "event_id": event.id,
                 "data": kafka_data
             }
-            self.producer.send('event-updates', value=message)
+            self.producer.send('event-events', value=message)
             self.producer.flush()
             return event.id
         except IntegrityError:

@@ -11,6 +11,7 @@ class TrainingCalculationHandler:
         )
     def calculate_ftp_vo2max(self, session_id):
         # Fetch user training data
+        print(session_id, "Value of session_id")
         session = TrainingSession.query.get(session_id)
         if not session:
             return {"error": "Session not found"}
@@ -27,16 +28,18 @@ class TrainingCalculationHandler:
                 "timestamp": datetime.utcnow().isoformat()
             }
         }
-        self.producer.send('training-metrics', value=event_data)
+        self.producer.send('metrics-events', value=event_data)
         self.producer.flush()
 
         return {"FTP": ftp, "VO2max": vo2max}
 
 
     def _calculate_ftp(self, power_output, duration):
-        # Placeholder: Actual implementation needed based on data available
-        return 95 * (power_output / duration)
+        if duration > 0:
+            return 95 * (power_output / duration)
+        return 0
 
     def _calculate_vo2max(self, max_heart_rate, resting_heart_rate):
-        # Placeholder: Actual implementation needed based on data available
-        return 15 * (max_heart_rate / resting_heart_rate)
+        if resting_heart_rate > 0:
+            return 15 * (max_heart_rate / resting_heart_rate)
+        return 0

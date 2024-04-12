@@ -17,7 +17,8 @@
             android:padding="8dp"
             android:text="@string/calendar_event_field"
             android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
 
         <TextView
             android:layout_width="0dp"
@@ -26,7 +27,8 @@
             android:padding="8dp"
             android:text="@string/calendar_date_field"
             android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            android:textStyle="bold"
+            android:textColor="@android:color/white"/>
 
         <TextView
             android:layout_width="0dp"
@@ -35,7 +37,8 @@
             android:padding="8dp"
             android:text="@string/calendar_description_field"
             android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            android:textStyle="bold"
+            android:textColor="@android:color/white"/>
 
     </LinearLayout>
 
@@ -52,7 +55,7 @@
             android:layout_weight="1"
             android:padding="8dp"
             android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/white"/>
 
         <TextView
             android:id="@+id/textViewColumn2"
@@ -61,7 +64,7 @@
             android:layout_weight="1"
             android:padding="8dp"
             android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/white"/>
 
         <TextView
             android:id="@+id/textViewColumn3"
@@ -70,7 +73,7 @@
             android:layout_weight="1"
             android:padding="8dp"
             android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/white"/>
 
     </LinearLayout>
 

@@ -3,7 +3,6 @@ sqlalchemy
 wheel
 flask
 Flask-SQLAlchemy
-# Flask-Migrate
 python-abc
 python-dotenv
 psycopg2-binary
@@ -16,3 +15,4 @@ pytest-env
 # bcrypt
 Flask-Testing
 kafka-python
+Flask-Migrate

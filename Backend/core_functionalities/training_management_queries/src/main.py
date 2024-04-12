@@ -1,85 +1,106 @@
-from dotenv import load_dotenv
 from flask import Flask, jsonify
+from .extensions import db, migrate
 from .api.training_plan import training_api, training_plan_blueprint
-from .models.database_queries import init_db_queries, db_session_queries
-from .models.training_history import TrainingHistory
+from .config import DevelopmentConfig, ProductionConfig, TestingConfig
+from .queries.listen_training import start_listener_in_background
+from .models.training_session import TrainingSession
+import os
 
+def create_app(config_class=DevelopmentConfig):
+    app = Flask(__name__)
+    env = os.environ.get('FLASK_ENV', 'development')
+    if env == 'production':
+        app.config.from_object(ProductionConfig)
+    elif env == 'testing':
+        app.config.from_object(TestingConfig)
+    else:
+        app.config.from_object(DevelopmentConfig)
 
-loaded = load_dotenv('.env.development')
+    print("Environment:", env)
+    print("Database URI:", app.config['SQLALCHEMY_DATABASE_URI'])
 
+    db.init_app(app)
+    migrate.init_app(app, db)
 
-app = Flask(__name__)
-app.register_blueprint(training_api)
-app.register_blueprint(training_plan_blueprint)
-init_db_queries()
+    app.register_blueprint(training_api)
+    app.register_blueprint(training_plan_blueprint)
+    from .models.training_session import TrainingSession
+    start_listener_in_background(app)
+    # # Optional: Add a CLI command to insert default data
+    # @app.cli.command('insert-data')
+    # def insert_default_data():
+    #     insert_data_function()  # Define this function to insert data
+
+    return app
+
+# app = Flask(__name__)
+# app.register_blueprint(training_api)
+# app.register_blueprint(training_plan_blueprint)
 
 
 
 # Este método debe eliminarse, cuando la aplicación esé completa, para el desarrollo de la HU011
 # se deja para pruebas.
-def insert_default_data():
-    default_training_data = [
-        {
-            'date': '2024-04-06',
-            'username': 'usuario1',
-            'sport': 'running',
-            'time': '1 hour',
-            'distance': '5 km',
-            'weight': '70 kg',
-            'intensity': 'medium',
-            'series': '3',
-            'calories': '300 kcal'
-        },
-        {
-            'date': '2024-04-03',
-            'username': 'usuario1',
-            'sport': 'running',
-            'time': '1 hour',
-            'distance': '5 km',
-            'weight': '70 kg',
-            'intensity': 'medium',
-            'series': '3',
-            'calories': '300 kcal'
-        },
-        {
-            'date': '2024-04-04',
-            'username': 'usuario1',
-            'sport': 'running',
-            'time': '1 hour',
-            'distance': '5 km',
-            'weight': '70 kg',
-            'intensity': 'medium',
-            'series': '3',
-            'calories': '300 kcal'
-        },
-    ]
+# def insert_data_function():
+#     default_training_data = [
+#         {
+#             'date': '2024-04-06',
+#             'username': 'usuario1',
+#             'sport': 'running',
+#             'time': '1 hour',
+#             'distance': '5 km',
+#             'weight': '70 kg',
+#             'intensity': 'medium',
+#             'series': '3',
+#             'calories': '300 kcal'
+#         },
+#         {
+#             'date': '2024-04-03',
+#             'username': 'usuario1',
+#             'sport': 'running',
+#             'time': '1 hour',
+#             'distance': '5 km',
+#             'weight': '70 kg',
+#             'intensity': 'medium',
+#             'series': '3',
+#             'calories': '300 kcal'
+#         },
+#         {
+#             'date': '2024-04-04',
+#             'username': 'usuario1',
+#             'sport': 'running',
+#             'time': '1 hour',
+#             'distance': '5 km',
+#             'weight': '70 kg',
+#             'intensity': 'medium',
+#             'series': '3',
+#             'calories': '300 kcal'
+#         },
+#     ]
 
-    for data in default_training_data:
-        training = TrainingHistory(
-            date=data['date'],
-            username=data['username'],
-            sport=data['sport'],
-            time=data['time'],
-            distance=data['distance'],
-            weight=data['weight'],
-            intensity=data['intensity'],
-            series=data['series'],
-            calories=data['calories']
-        )
-        db_session_queries.add(training)
+#     for data in default_training_data:
+#         training = TrainingHistory(
+#             date=data['date'],
+#             username=data['username'],
+#             sport=data['sport'],
+#             time=data['time'],
+#             distance=data['distance'],
+#             weight=data['weight'],
+#             intensity=data['intensity'],
+#             series=data['series'],
+#             calories=data['calories']
+#         )
+#         db.add(training)
     
-    # Commit para guardar los cambios en la base de datos
-    db_session_queries.commit()
-
-insert_default_data()
-
+#     # Commit para guardar los cambios en la base de datos
+#     db.commit()
 
 if __name__ == '__main__':
     
-    insert_default_data()
+    app = create_app()
     # project_id = 'proyecto-final-miso-416801'
     # subscription_name = 'evento-registrar-usuario'
     # credentials_path = 'proyecto-final-miso-416801-9cf3fcab0edf.json'
     # subscribe_to_pubsub(project_id, subscription_name, credentials_path)
 
-    app.run(host="0.0.0.0", port=3000)
+    app.run(host="0.0.0.0", port=3003)

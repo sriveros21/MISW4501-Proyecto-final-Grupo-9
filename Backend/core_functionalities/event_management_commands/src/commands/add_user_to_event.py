@@ -7,8 +7,10 @@ class AddUserToEventCommand:
     def __init__(self, user_id, event_id):
         self.user_id = user_id
         self.event_id = event_id
-        self.producer = KafkaProducer(bootstrap_servers=['kafka:9092'],
-                                      value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        #self.producer = KafkaProducer(bootstrap_servers=['kafka:9092'],
+        #                              value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        self.producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                            value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
     def execute(self):
         event = Event.query.get(self.event_id)

@@ -6,15 +6,17 @@ WORKDIR /event_management_queries
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
+# Install Gunicorn
+RUN pip install gunicorn
+
 COPY . /event_management_queries
 
 # Set environment variables
-# FLASK_APP is used to specify how to load the application. 
-# This should be the name of your Flask app's main module or package.
-ENV FLASK_APP=src.main
-# Optional: Set to development if you want debug mode on by default
+ENV FLASK_APP=src/main.py
 ENV FLASK_ENV=development
 
-# Command to run the Flask application
-# Use flask run and specify the host to run on all network interfaces inside the container
-CMD ["flask", "run", "--host=0.0.0.0", "--port=3002"]
+# Expose the port app runs on
+EXPOSE 3002
+
+# Use Gunicorn to serve the app. Adjust the number of workers as needed.
+CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:3002","--timeout=120", "--log-level=debug", "src.main:create_app()"]

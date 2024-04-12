@@ -13,7 +13,7 @@ COPY . /event_management_commands
 
 # Set environment variables
 ENV FLASK_APP=src/main.py
-ENV FLASK_ENV=production
+ENV FLASK_ENV=development
 
 # Expose the port app runs on
 EXPOSE 3001

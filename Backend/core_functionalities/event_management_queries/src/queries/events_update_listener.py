@@ -13,7 +13,8 @@ def create_kafka_consumer():
         try:
             consumer = KafkaConsumer(
                 'event-updates',
-                bootstrap_servers=['kafka:9092'],
+                #bootstrap_servers=['kafka:9092'],
+                bootstrap_servers=['localhost:9092'],
                 auto_offset_reset='earliest',
                 group_id='events-consumer',
                 value_deserializer=lambda m: json.loads(m.decode('utf-8'))

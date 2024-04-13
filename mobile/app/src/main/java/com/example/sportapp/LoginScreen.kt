@@ -1,36 +1,10 @@
 package com.example.sportapp
+
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import com.android.volley.toolbox.HttpResponse
-import com.example.sportapp.data.api.ApiService
-import com.example.sportapp.data.api.EventsService
-import com.example.sportapp.data.model.CalendarEvent
 import com.example.sportapp.ui.home.Home
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
-import okhttp3.Request
-import kotlin.math.log
-
-//import io.ktor.client.HttpClient
-//import io.ktor.client.engine.android.Android
-//import io.ktor.client.request.get
-//import io.ktor.client.statement.HttpResponse
-//import kotlinx.coroutines.Dispatchers
-//import kotlinx.coroutines.withContext
 
 class LoginScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

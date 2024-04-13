@@ -2,14 +2,14 @@ import os
 
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # Common config settings
+    # Common configuration settings
 
 class DevelopmentConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'postgresql://commands_user:commands_pass@localhost:5436/commands_db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'postgresql://queries_user:queries_pass@localhost:5435/queries_db')
 
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'postgresql://postgres:password@localhost/db_training_management_test')
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///training_commands_production.db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///training_queries_production.db')

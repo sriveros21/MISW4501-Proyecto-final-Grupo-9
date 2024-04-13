@@ -7,8 +7,10 @@ class AddUserToEventCommand:
     def __init__(self, user_id, event_id):
         self.user_id = user_id
         self.event_id = event_id
-        self.producer = KafkaProducer(bootstrap_servers=['kafka:9092'],
-                                      value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        #self.producer = KafkaProducer(bootstrap_servers=['kafka:9092'],
+        #                              value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        self.producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                            value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
     def execute(self):
         event = Event.query.get(self.event_id)
@@ -24,5 +26,5 @@ class AddUserToEventCommand:
             db.session.commit()
             # Publish an event to Kafka after updating the database
             message = {"event_id": self.event_id, "user_id": self.user_id, "type": "UserAddedToEvent"}
-            self.producer.send('event-updates', value=message)
+            self.producer.send('event-events', value=message)
             self.producer.flush()

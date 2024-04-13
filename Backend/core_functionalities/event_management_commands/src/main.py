@@ -1,13 +1,9 @@
 from flask import Flask
-from .extensions import db
-#from flask_migrate import Migrate
+from .extensions import db, migrate
+
 from .api.event import event_blueprint
 import os
 from .config import DevelopmentConfig, ProductionConfig, TestingConfig
-
-# Configuration
-#DATABASE_URI = os.environ.get("DATABASE_URL")
-#migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
@@ -23,8 +19,7 @@ def create_app():
 
     db.init_app(app)
 
-    #migrate.init_app(app, db)
-    print(f"Database URL: {app.config['SQLALCHEMY_DATABASE_URI']}")
+    migrate.init_app(app, db)
     with app.app_context():
         try:
             db.create_all()
@@ -32,9 +27,6 @@ def create_app():
         except Exception as e:
             print(f"Error initializing database tables: {e}")
 
-    #    from .api.event import event_blueprint  # Import models here to ensure they are registered
-    #    db.create_all()
-    # Register blueprints
     app.register_blueprint(event_blueprint)
 
     # Function to register CLI commands
@@ -51,6 +43,4 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
-    # with app.app_context():
-    #     db.create_all()  # Create database tables for our data models
     app.run(host="0.0.0.0", port=3001)

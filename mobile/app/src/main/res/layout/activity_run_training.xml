@@ -113,7 +113,7 @@ android:background="@color/backcolorapp">
 
 
         <Chronometer
-            android:id="@+id/chronometer"
+            android:id="@+id/chronometer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
@@ -131,7 +131,6 @@ android:background="@color/backcolorapp">
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="100dp"
             android:background="@drawable/button_background"
-
             android:enabled="true"
             android:fontFamily="@font/lato_bold_font"
             android:text="@string/start_training"

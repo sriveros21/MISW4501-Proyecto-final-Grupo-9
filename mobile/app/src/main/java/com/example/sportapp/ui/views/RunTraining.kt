@@ -14,7 +14,7 @@ import com.example.sportapp.ui.home.Home
 
 class RunTraining : AppCompatActivity() {
 
-    private lateinit var chronometer: Chronometer
+    private lateinit var chronometer1: Chronometer
     private lateinit var startButton: Button
     private var isChronometerRunning: Boolean = false
     private var valorTraining: String = ""
@@ -33,7 +33,7 @@ class RunTraining : AppCompatActivity() {
 
         valorTraining = intent.getStringExtra("training").toString()
         tvwTypeRun.text = getString(R.string.type_training)  + " " + valorTraining
-        chronometer = findViewById(R.id.chronometer)
+        chronometer1 = findViewById(R.id.chronometer1)
         startButton = findViewById(R.id.btnStart)
 
         startButton.setOnClickListener { startChronometer() }
@@ -46,18 +46,18 @@ class RunTraining : AppCompatActivity() {
     fun startChronometer() {
         if (!isChronometerRunning) {
             // Hacer visible el cronómetro y comenzar a contar
-            chronometer.visibility = View.VISIBLE
+            chronometer1.visibility = View.VISIBLE
             //chronometer.format = "HH:mm:ss"
-            chronometer.base = SystemClock.elapsedRealtime()
-            chronometer.start()
+            chronometer1.base = SystemClock.elapsedRealtime()
+            chronometer1.start()
 
             // Cambiar el texto del botón a "Detener"
             startButton.text = getString(R.string.stop_training)
             isChronometerRunning = true
         } else {
             // Detener el cronómetro
-            chronometer.stop()
-            val tiempoDetenido = chronometer.text.toString()
+            chronometer1.stop()
+            val tiempoDetenido = chronometer1.text.toString()
             // Cambiar el texto del botón a "Iniciar"
             startButton.text = getString(R.string.start_training)
             isChronometerRunning = false

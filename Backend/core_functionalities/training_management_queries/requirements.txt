@@ -2,7 +2,7 @@ marshmallow
 sqlalchemy
 wheel
 flask
-# Flask-Migrate
+Flask-Migrate
 python-abc
 python-dotenv
 psycopg2-binary
@@ -12,4 +12,5 @@ pytest
 pytest-cov
 pytest-mock
 pytest-env
+kafka-python
 # bcrypt

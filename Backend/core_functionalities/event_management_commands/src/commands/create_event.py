@@ -8,7 +8,8 @@ class CreateEventCommandHandler:
 
     def __init__(self):
         self.producer = KafkaProducer(
-            bootstrap_servers=['kafka:9092'],
+            #bootstrap_servers=['kafka:9092'],
+            bootstrap_servers=['localhost:9092'],
             value_serializer=lambda v: json.dumps(v, default=str).encode('utf-8')
         )
     
@@ -63,7 +64,7 @@ class CreateEventCommandHandler:
                 "event_id": event.id,
                 "data": kafka_data
             }
-            self.producer.send('event-updates', value=message)
+            self.producer.send('event-events', value=message)
             self.producer.flush()
             return event.id
         except IntegrityError:

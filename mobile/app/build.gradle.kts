@@ -59,6 +59,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     annotationProcessor ("com.google.dagger:dagger-compiler:2.51.1")
 
+
 //    implementation ("io.ktor:ktor-client-core:$2.3.0")
 //    implementation ("io.ktor:ktor-client-android:$2.3.0")
 //    implementation ("io.ktor:ktor-client-okhttp:$2.3.0")

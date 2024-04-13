@@ -1,11 +1,13 @@
 package com.example.sportapp.ui.views
 
+import android.content.Context
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sportapp.R
 import com.example.sportapp.data.model.TrainingMetricsCalculatedResponse
@@ -50,7 +52,7 @@ class FinishTraining : AppCompatActivity() {
         val timeTraining = intent.getStringExtra("timeTraining").toString()
         val valorTraining = intent.getStringExtra("valorTraining").toString()
 
-            repository.postCalculateFTPVo2(1, object : Callback<TrainingMetricsCalculatedResponse> {
+        repository.postCalculateFTPVo2(1, object : Callback<TrainingMetricsCalculatedResponse> {
             override fun onResponse(call: Call<TrainingMetricsCalculatedResponse>, response: Response<TrainingMetricsCalculatedResponse>) {
                 if (response.isSuccessful) {
                     val metricsResponse = response.body()
@@ -71,8 +73,10 @@ class FinishTraining : AppCompatActivity() {
 
                     }
                 } else {
+                    val errorMessage = "La llamada al servicio no fue exitosa. Código de error: ${response.code()}"
                     // Manejar la respuesta de error aquí
-                    Log.d("DEBUG", "La llamada al servicio no fue exitosa. Código de error: ${response.code()}")
+                    showToast(this@FinishTraining, errorMessage)
+                    Log.d("DEBUG", errorMessage)
                 }
             }
 
@@ -82,10 +86,9 @@ class FinishTraining : AppCompatActivity() {
                 t.printStackTrace()
             }
         })
+    }
 
-
-
-
-
+    fun showToast(context: Context, message: String, duration: Int = Toast.LENGTH_SHORT) {
+        Toast.makeText(context, message, duration).show()
     }
 }

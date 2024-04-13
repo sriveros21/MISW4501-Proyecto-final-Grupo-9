@@ -49,13 +49,6 @@ class CalendarEvents : AppCompatActivity() {
         recyclerView.adapter = tableAdapter
 
 
-        Log.d("DEBUG", "Aqui empezamos...")
-
-        /* Conectar con servicio y traer datos. */
-        //val calendarService = RetrofitEventsManagementQueries.instance
-        //val call = calendarService.getCalendarEvents(1)
-
-
         repository.getCalendarEvents(1).enqueue(object : Callback<List<CalendarEvent>> {
             override fun onResponse(call: Call<List<CalendarEvent>>, response: Response<List<CalendarEvent>>) {
                 if (response.isSuccessful) {
@@ -81,14 +74,6 @@ class CalendarEvents : AppCompatActivity() {
             }
         })
 
-//        // Agregar datos de ejemplo.
-//        val data = listOf(
-//            Triple("Evento 1", "2010-01-01", "Descripcion del evento 1"),
-//            Triple("Evento 2", "2010-01-02", "Descripcion del evento 2"),
-//            Triple("Evento 3", "2010-01-03", "Descripcion del evento 3"),
-//            // Agregar más datos si es necesario
-//        )
-//        data.forEach { tableAdapter.addItem(it) }
 
     }
 
@@ -123,7 +108,7 @@ class CalendarEvents : AppCompatActivity() {
             fun bind(item: CalendarEvent) {
                 column1TextView.text = item.nombre
                 column2TextView.text = item.fecha
-                column3TextView.text = item.descripcion
+                column3TextView.text = item.descripción
             }
         }
     }

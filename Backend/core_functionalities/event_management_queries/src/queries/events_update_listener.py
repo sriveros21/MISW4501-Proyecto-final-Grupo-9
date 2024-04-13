@@ -21,7 +21,7 @@ def create_kafka_consumer():
             consumer = KafkaConsumer(
                 'event-events',
                 #bootstrap_servers=['kafka:9092'],
-                bootstrap_servers=['localhost:9092'],
+                bootstrap_servers=['kafka:9092'],
                 auto_offset_reset='earliest',
                 group_id='events-consumer',
                 value_deserializer=json_deserializer

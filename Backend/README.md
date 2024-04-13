@@ -8,11 +8,70 @@ A continuación, presentamos el paso a paso para desplegar la aplicación desarr
 ## 1. Descargar el repositorio desde github en la siguiente URL: 
            (https://github.com/MISW-4301-Desarrollo-Apps-en-la-Nube/s202314-proyecto-grupo24.)
 
- **Importante validar que se carguen cada una de las carpetas de los servicios, y sus archivos, como se referencia en la siguiente imagen**
+## 2. Instrucciones de Ejecución de la Aplicacion con docker compose y localmente
+Esta sesion proporciona las instrucciones necesarias para desplegar y ejecutar los servicios tanto en Docker como localmente.
 
-![image](https://github.com/MISW-4301-Desarrollo-Apps-en-la-Nube/s202314-proyecto-grupo24/assets/111831086/186d155e-0acf-4c7e-a9cf-e6867baa0612)
+Despliegue con Docker Compose
+1. Ejecutar Docker Compose
+Para iniciar todos los servicios definidos en el archivo docker-compose.yml, ejecuta el siguiente comando:
 
-## 2. Crear clúster en GCP.
+``docker-compose up --build``
+
+Este comando complila y levanta todos los contenedores necesarios para el funcionamiento de la aplicación, incluidos bases de datos, Kafka, Zookeeper y demás servicios.
+
+2. Ejecutar Migraciones
+Una vez que los servicios están corriendo, necesitas ejecutar las migraciones para configurar las bases de datos. Utiliza los siguientes comandos para aplicar migraciones en cada servicio:
+
+``docker-compose exec <nombre_del_servicio> flask db upgrade``
+Reemplaza <nombre_del_servicio> con el nombre de cada servicio para el que deseas ejecutar migraciones.
+
+## Ejecución Local
+Para ejecutar los servicios localmente, sigue los siguientes pasos:
+
+1. Configuración de Kafka y Zookeeper
+
+Antes de levantar kafka asegurate de que tus servicios tengan la configuracion correcta, debes modificar los bootstrap_servers para que no apunte a kafka pero si a localhost, de la siguiente manera: 
+```python
+self.producer = KafkaProducer(bootstrap_servers=['kafka:9092'])
+```
+Para configurar Kafka y Zookeeper localmente, debes tener instalados ambos servicios. Puedes levantarlos mediante Docker con el siguiente comando:
+
+``docker-compose up -d zookeeper kafka``
+Asegúrate de configurar KAFKA_ADVERTISED_LISTENERS en tu archivo docker-compose.yml para apuntar a localhost:
+
+```bash
+environment:
+  KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+```
+2. Crear Bases de Datos en Docker
+Puedes crear las bases de datos en contenedores Docker ejecutando comandos similares a los siguientes:
+
+```bash
+docker run --name <nombre_bd> -e POSTGRES_USER=<usuario> -e POSTGRES_PASSWORD=<contraseña> -d postgres
+```
+Reemplaza <nombre_bd>, <usuario>, y <contraseña> con los valores adecuados, guiate del archivo ``config.py`` en el src de cada servicio, ahi podras encontrar cada dato.
+
+3. Ejecutar Migraciones Localmente
+Asegúrate de tener las variables de entorno adecuadas para conectar a tus bases de datos, es decir la base de datos que creaste anteriormente debe tener una variable de entorno asociada al servicio llamada `DATABASE_URL` exportala para que sea visible a la sesion de donde vas a lanzar el servicio. Luego, ejecuta las migraciones como se indica:
+
+```bash
+flask db upgrade
+```
+4. Establecer Variables de Entorno
+Establece las variables de entorno necesarias para conectar con las bases de datos. Esto depende de tu sistema operativo, pero en general puedes hacerlo de la siguiente manera:
+```bash
+export DATABASE_URL=postgresql://usuario:contraseña@localhost:5432/nombre_bd
+```
+5. Ejecutar los Servicios en Puertos Específicos
+Finalmente, ejecuta cada servicio en un puerto específico usando Flask o tu servidor WSGI preferido:
+
+```bash
+flask run --port 3001
+```
+Reemplaza 3001 con el puerto correspondiente para cada servicio.
+
+
+## 3. Crear clúster en GCP.
 
 Antes de crear el clúster en GCP debemos crea las redes que utilizaron el despliegue en general tanto para el clúster como para la base de datos, teniendo en cuenta los siguientes parámetros:
 
@@ -32,14 +91,14 @@ Imagen del cluster una vez a sido creado.
 ![image](https://github.com/MISW-4301-Desarrollo-Apps-en-la-Nube/s202314-proyecto-grupo24/assets/111831086/41c9a985-4e32-4701-a706-56cbcb3c0e07)
 
 
-## 3. Crear y subir imagenes de cada unos de los PODs a a GCP.
+## 4. Crear y subir imagenes de cada unos de los PODs a a GCP.
 
 Par el despliegue se debe contar con el **Container Registry** (activando la API del **Artifact Registry**) y dentro las imágenes de los microservicios que serán desplegado, para ello desde la carpeta del microservicio en el código creamos y subimos las imágenes a el **Container Registry** (siguiendo las intrucciónes del tutorial **Container Registry de la semana 3**). Para nuestro caso el container se llama dev-nativa-24-container y se presenta en la siguiente imagen:
 
 ![image](https://github.com/MISW-4301-Desarrollo-Apps-en-la-Nube/s202314-proyecto-grupo24/assets/111831086/66ce8457-997e-4742-af19-b7807a116730)
 
 
-## 4. Crear base de datos Postgress.
+## 5. Crear base de datos Postgress.
 
 Crear la base de datos en GCP, para lo cual elegimos POSTGRESS, y realizamos la configuracion correspondiente.
 
@@ -57,7 +116,7 @@ Asi se debe ver el secret en la seccion de **Kubernets > Secrets y ConfigMaps**
 ![image](https://github.com/MISW-4301-Desarrollo-Apps-en-la-Nube/s202314-proyecto-grupo24/assets/111831086/9808297d-8736-4c15-a78e-66093bdad655)
 
 
-## 5. Configuracion del secret en los PODs que necesitan conexión con la base de datos.
+## 6. Configuracion del secret en los PODs que necesitan conexión con la base de datos.
 
 Para que los PODS se puedan conectar a la base de datos, es importante realizar la siguiente configuración de **secret** en el archivo de despliegue, 
 
@@ -65,7 +124,7 @@ Ejemplo de como se razalizó la configuración a la base de datos y el nombre de
 
 ![image](https://github.com/MISW-4301-Desarrollo-Apps-en-la-Nube/s202314-proyecto-grupo24/assets/111831086/dcea6218-dec0-4e87-9019-b12f42e6f0f0)
 
-## 6. Crear servicios, funciones e Ingress en GCP.
+## 7. Crear servicios, funciones e Ingress en GCP.
 
 En la carpeta  “**deployment**” dentro de la solución, se generan 3 archivos *.yaml los cuales contienen la configuración para la creación de los servicios y el **Ingress** de la siguiente manera: 
 
@@ -123,7 +182,7 @@ Al entrar al detalle de la funcion debe ver lo siguiente:
 ![image](https://github.com/MISW-4301-Desarrollo-Apps-en-la-Nube/s202314-proyecto-grupo24/assets/111831086/917b253b-e76c-4040-afe6-8a6245164d61)
 
 
-## 7. Tomar la IP pública de Ingress.
+## 8. Tomar la IP pública de Ingress.
 
 Una vez finalizado el despliegue del **Ingress**, se debe validar que el estado este en **OK**, lo cual nos indicara que **Ingress** a logrado hacer validación “**Healtcheck**” de todos los servicios expuestos, y nos indicara que el despliegue se ha realizado con éxito.
 
@@ -133,7 +192,7 @@ En la columna **Frontends** se pueden visualizar cada uno de los servicios expue
 ![image](https://github.com/MISW-4301-Desarrollo-Apps-en-la-Nube/s202314-proyecto-grupo24/assets/111831086/f448d361-7a75-4ab8-9d97-d1d3d1712930)
 
 
-## 8. Configurar en el archivo **config.yaml** la IP tomada de GCP Ingress. (Esto para correr el Pipeline de la entrega 3)
+## 9. Configurar en el archivo **config.yaml** la IP tomada de GCP Ingress. (Esto para correr el Pipeline de la entrega 3)
 
 Este paso se debe realizar para que el pipeline pueda correr las pruebas hacia el proyecto correcto y no vaya a generar errores.
 

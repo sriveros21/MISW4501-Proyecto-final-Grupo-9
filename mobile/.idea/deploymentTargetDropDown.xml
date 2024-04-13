@@ -18,7 +18,13 @@
           <timeTargetWasSelectedWithDropDown value="2024-04-13T12:41:08.136317500Z" />
         </State>
       </entry>
+      <entry key="FinishTrainingTest">
+        <State />
+      </entry>
       <entry key="RunTraining">
+        <State />
+      </entry>
+      <entry key="Tests in 'com.example.sportapp'">
         <State />
       </entry>
       <entry key="app">

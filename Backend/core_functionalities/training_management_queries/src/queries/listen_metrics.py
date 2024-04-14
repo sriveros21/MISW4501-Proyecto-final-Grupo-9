@@ -19,7 +19,7 @@ def create_kafka_consumer():
         try:
             consumer = KafkaConsumer(
                 'metrics-events',
-                bootstrap_servers=['localhost:9092'],
+                bootstrap_servers=['kafka:9092'],
                 auto_offset_reset='earliest',
                 group_id='training-queries',
                 value_deserializer=json_deserializer

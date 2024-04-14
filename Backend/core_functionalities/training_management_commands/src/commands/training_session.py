@@ -6,7 +6,7 @@ import json
 class StartTrainingSessionCommandHandler:
     def __init__(self):
         self.producer = KafkaProducer(
-            bootstrap_servers=['localhost:9092'],
+            bootstrap_servers=['kafka:9092'],
             value_serializer=lambda v: json.dumps(v, default=str).encode('utf-8')
         )
 
@@ -19,7 +19,7 @@ class StartTrainingSessionCommandHandler:
 class StopTrainingSessionCommandHandler:
     def __init__(self):
         self.producer = KafkaProducer(
-            bootstrap_servers=['localhost:9092'],
+            bootstrap_servers=['kafka:9092'],
             value_serializer=lambda v: json.dumps(v, default=str).encode('utf-8')
         )
 

@@ -24,8 +24,8 @@ services:
       #KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9093,EXTERNAL://localhost:9092
       #KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_LISTENERS: PLAINTEXT://:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
@@ -94,36 +94,66 @@ services:
     networks:
       - em_net
 
-  db_training_management:
+  db_training_management_commands:
     image: postgres:13
-    container_name: db_tmq
+    container_name: db_tm_commands
     environment:
-      POSTGRES_DB: db_training_management
+      POSTGRES_DB: db_training_management_commands
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: tmqUnoDos
+      POSTGRES_PASSWORD: tmCommands
     networks:
-      - tmq_net
+      - em_net
 
     healthcheck:
-          test: ["CMD-SHELL", "pg_isready -U postgres -d db_training_management"]
-          interval: 5s
-          timeout: 10s
-          retries: 5
+        test: ["CMD-SHELL", "pg_isready -U postgres -d db_training_management_commands"]
+        interval: 5s
+        timeout: 10s
+        retries: 5
+
+  training_management_commands:
+    build:
+      context: ./core_functionalities/training_management_commands
+    container_name: training_management_commands_container
+    ports:
+      - "3004:3004"
+    depends_on:
+      - db_training_management_commands
+    environment:
+      DATABASE_URL: postgresql://postgres:tmCommands@db_training_management_commands:5432/db_training_management_commands
+    networks:
+      - em_net
+
+  db_training_management_queries:
+    image: postgres:13
+    container_name: db_tm_queries
+    environment:
+      POSTGRES_DB: db_training_management_queries
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: tmQueries
+    networks:
+      - em_net
+
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres -d db_training_management_queries"]
+        interval: 5s
+        timeout: 10s
+        retries: 5
 
   training_management_queries:
     build:
       context: ./core_functionalities/training_management_queries
     container_name: training_management_queries_container
     ports:
-      - "3000:3000"
+      - "3003:3003"
     depends_on:
-      db_training_management:
+      db_training_management_queries:
         condition: service_healthy
-
+      kafka:
+        condition: service_started
     environment:
-      DATABASE_URL: postgresql://postgres:tmqUnoDos@db_training_management:5432/db_training_management
+      DATABASE_URL: postgresql://postgres:tmQueries@db_training_management_queries:5432/db_training_management_queries
     networks:
-      - tmq_net
+      - em_net
 
 networks:
   # app_net:

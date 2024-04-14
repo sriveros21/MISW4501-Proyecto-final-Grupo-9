@@ -2,26 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="CalendarEventsTest">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\celis\.android\avd\Pixel_8_Pro_API_VanillaIceCream.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-13T12:41:08.136317500Z" />
-        </State>
-      </entry>
       <entry key="FinishTrainingTest">
         <State />
       </entry>
+      <entry key="HomeTest">
+        <State />
+      </entry>
       <entry key="RunTrainingTest">
+        <State />
+      </entry>
+      <entry key="StravaViewConnectActivityTest">
         <State />
       </entry>
       <entry key="Tests in 'com.example.sportapp'">

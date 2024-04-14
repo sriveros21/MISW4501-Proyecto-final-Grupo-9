@@ -3,6 +3,7 @@ package com.example.sportapp.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sportapp.LoginScreen
 import com.example.sportapp.R
@@ -18,6 +19,7 @@ class Home : AppCompatActivity() {
         val btnStrava = findViewById<ImageView>(R.id.imgStrava)
         val btnRunExe = findViewById<ImageView>(R.id.ivRunExe)
         val btnExit = findViewById<ImageView>(R.id.ivHome)
+        val btnExit1 = findViewById<TextView>(R.id.tvwCerrarSesion)
         val btnCalendar = findViewById<ImageView>(R.id.ivCalendar)
 
         //Redirige a la Actividad Strava.
@@ -32,8 +34,13 @@ class Home : AppCompatActivity() {
             startActivity(startTraining)
         }
 
-        //Redirige a la Actividad Iniciar Entrenamiento.
+        //Cerrar Sesion.
         btnExit.setOnClickListener{
+            val exitApp = Intent(this, LoginScreen::class.java)
+            startActivity(exitApp)
+        }
+
+        btnExit1.setOnClickListener{
             val exitApp = Intent(this, LoginScreen::class.java)
             startActivity(exitApp)
         }

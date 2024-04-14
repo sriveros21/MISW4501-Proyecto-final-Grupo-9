@@ -22,5 +22,6 @@
     <string name="calendar_event_field">Evento</string>
     <string name="calendar_date_field">Fecha</string>
     <string name="calendar_description_field">Descripción</string>
+    <string name="home_close_sesion">Cerrar Sesión</string>
 
 </resources>

@@ -10,7 +10,7 @@ from models.training_plan import TrainingPlan  # Importa tus modelos aquí
 
 
 # Configuration
-DATABASE_URI = 'sqlite:///C:/Users/angey/OneDrive/Escritorio/ProyectoFinal/MISW4501-Proyecto-final-Grupo-9/Backend/training_management/src/trainingmanagement.db'
+DATABASE_URI = 'sqlite:///C:/Users/user/OneDrive/Escritorio/ProyectoFinal/MISW4501-Proyecto-final-Grupo-9/Backend/training_management/src/trainingmanagement.db'
 
 def create_app():
     app = Flask(__name__)
@@ -32,6 +32,5 @@ def create_app():
 if __name__ == "__main__":
     app = create_app()
     with app.app_context():
-        print("dame tiempo!!!")
         db.create_all()  # Create database tables for our data models
     app.run(debug=True)

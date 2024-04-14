@@ -1,9 +1,11 @@
 from flask import Flask, jsonify
 from .extensions import db, migrate
 from .api.training_plan import training_api, training_plan_blueprint
+from .api.training_sesion import training_session_blueprint
 from .config import DevelopmentConfig, ProductionConfig, TestingConfig
 from .queries.listen_training import start_listener_in_background
 from .queries.listen_metrics import start_listener_in_background as start_listener_in_background_metrics
+from .queries.listen_plan import start_listener_in_background as start_listener_in_background_plan
 from .models.training_session import TrainingSession
 import os
 
@@ -25,9 +27,11 @@ def create_app(config_class=DevelopmentConfig):
 
     app.register_blueprint(training_api)
     app.register_blueprint(training_plan_blueprint)
+    app.register_blueprint(training_session_blueprint)
     from .models.training_session import TrainingSession
     start_listener_in_background(app)
     start_listener_in_background_metrics(app)
+    start_listener_in_background_plan(app)
     # # Optional: Add a CLI command to insert default data
     # @app.cli.command('insert-data')
     # def insert_default_data():

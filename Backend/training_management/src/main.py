@@ -23,7 +23,6 @@ def create_app():
     # Initialize app with SQLAlchemy
     db.init_app(app)
 
-    # Reg
     # Register blueprints
     app.register_blueprint(training_plan_blueprint)
 

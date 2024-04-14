@@ -2,190 +2,191 @@ version: '3'
 
 services:
 
-  # database_route:
-  #   image: postgres:13
-  #   container_name: route_container
-  #   environment:
-  #     POSTGRES_DB: database_route
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: nativa1234
-  #   networks:
-  #     - route_net
-
-  #   healthcheck:
-  #         test: ["CMD-SHELL", "pg_isready -U postgres -d database_route"]
-  #         interval: 5s
-  #         timeout: 10s
-  #         retries: 5
-
-  # route_management:
-  #   build:
-  #     context: ./route_management
-  #   container_name: route_management_container
-  #   ports:
-  #     - "3002:3002"
-  #   depends_on:
-  #     database_route:
-  #       condition: service_healthy
-
-  #   environment:
-  #     DATABASE_URL: postgresql://postgres:nativa1234@database_route:5432/database_route
-  #   networks:
-  #     - app_net
-  #     - route_net
-      
-  # database_offer:
-  #   image: postgres:13
-  #   container_name: offer_container
-  #   environment:
-  #     POSTGRES_DB: database_offer
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: nativa1234
-  #   networks:
-  #     - offer_net
-
-  #   healthcheck:
-  #         test: ["CMD-SHELL", "pg_isready -U postgres -d database_offer"]
-  #         interval: 5s
-  #         timeout: 10s
-  #         retries: 5
-          
-  # offer_management:
-  #   build:
-  #     context: ./offer_management
-  #   container_name: offer_management_container
-  #   ports:
-  #     - "3003:3003"
-  #   depends_on:
-  #     database_offer:
-  #       condition: service_healthy
-  #   environment:
-  #     DATABASE_URL: postgresql://postgres:nativa1234@database_offer:5432/database_offer
-  #   networks:
-  #     - app_net
-  #     - offer_net
-
-  # database_post:
-  #   image: postgres:13
-  #   container_name: post_container
-  #   environment:
-  #     POSTGRES_DB: database_post
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: nativa1234
-  #   networks:
-  #     - post_net
-
-  #   healthcheck:
-  #         test: ["CMD-SHELL", "pg_isready -U postgres -d database_post"]
-  #         interval: 5s
-  #         timeout: 10s
-  #         retries: 5
-
-  # post_management:
-  #   build:
-  #     context: ./post_management
-  #   container_name: post_management_container
-  #   ports:
-  #     - "3001:3001"
-  #   depends_on:
-  #     database_post:
-  #       condition: service_healthy
-  #   environment:
-  #     DATABASE_URL: postgresql://postgres:nativa1234@database_post:5432/database_post
-  #   networks:
-  #     - app_net
-  #     - post_net
-      
-
-  # database_user_old:
-  #   image: postgres:16.2
-  #   container_name: user_container
-  #   environment:
-  #     POSTGRES_DB: database_user
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: nativa1234
-  #   ports:
-  #     - 5435:5432
-  #   networks:
-  #     - user_net
-
-  #   healthcheck:
-  #         test: ["CMD-SHELL", "pg_isready -U postgres -d database_user"]
-  #         interval: 5s
-  #         timeout: 10s
-  #         retries: 5
-
-  database_user:
-    image: postgres:16.2
-    container_name: sportapp_container
-    environment:
-      POSTGRES_DB: database_user
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: sa123456
-      POSTGRES_INITDB_ARGS: "--listen-addresses='*'"
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
     ports:
-      - 5436:5432
+      - "2181:2181"
     networks:
-      - user_net
-    healthcheck:
-          test: ["CMD-SHELL", "pg_isready -U postgres -d database_user"]
-          interval: 5s
-          timeout: 10s
-          retries: 5
-
-  database_user_queries:
-    image: postgres:16.2
-    container_name: sportapp_container_queries
+      - em_net
+  
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
     environment:
-      POSTGRES_DB: database_user_queries
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: sa123456
-      POSTGRES_INITDB_ARGS: "--listen-addresses='*'"
-    ports:
-      - 5439:5432
-    networks:
-      - user_net
-    healthcheck:
-          test: ["CMD-SHELL", "pg_isready -U postgres -d database_user"]
-          interval: 5s
-          timeout: 10s
-          retries: 5
-
-  user_management:
-    build:
-      context: ./user_management
-    container_name: user_management_container
-    ports:
-      - "3500:3500"
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      #KAFKA_LISTENERS: INTERNAL://0.0.0.0:9093,EXTERNAL://0.0.0.0:9092
+      #KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      #KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      #KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9093,EXTERNAL://localhost:9092
+      #KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
-      database_user:
-        condition: service_healthy
-
-    environment:
-      DATABASE_URL: postgresql://postgres:nativa1234@database_user:5432/database_user
-      NATIVE_PATH: http://localhost:3000
-      SECRET_TOKEN: qwerty
+      - zookeeper
     networks:
-      - app_net
-      - user_net
+      - em_net
+  
+  db_event_management_commands:
+    image: postgres:13
+    container_name: db_em_commands
+    environment:
+      POSTGRES_DB: db_event_management_commands
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: emCommands
+    networks:
+      - em_net
 
-  app_native:
-    image: ghcr.io/misw-4301-desarrollo-apps-en-la-nube/true-native:2.0.0
-    container_name: native_management
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres -d db_event_management_commands"]
+        interval: 5s
+        timeout: 10s
+        retries: 5
+
+  event_management_commands:
+    build:
+      context: ./core_functionalities/event_management_commands
+    container_name: event_management_commands_container
     ports:
-      - "3000:3000"
+      - "3001:3001"
+    depends_on:
+      - db_event_management_commands
     environment:
-      SECRET_TOKEN: qwerty
-      MAX_WEBHOOK_DELAY: 50
-      MAX_POLL_DELAY: 20
-      SUCCESS_RATE: 80
+      DATABASE_URL: postgresql://postgres:emCommands@db_event_management_commands:5432/db_event_management_commands
     networks:
-      - user_net
+      - em_net
+
+  db_event_management_queries:
+    image: postgres:13
+    container_name: db_em_queries
+    environment:
+      POSTGRES_DB: db_event_management_queries
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: emQueries
+    networks:
+      - em_net
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d db_event_management_queries"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+  event_management_queries:
+    build:
+      context: ./core_functionalities/event_management_queries
+    container_name: event_management_queries_container
+    ports:
+      - "3002:3002"
+    depends_on:
+      db_event_management_queries:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgresql://postgres:emQueries@db_event_management_queries:5432/db_event_management_queries
+    networks:
+      - em_net
+
+  db_training_management_commands:
+    image: postgres:13
+    container_name: db_tm_commands
+    environment:
+      POSTGRES_DB: db_training_management_commands
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: tmCommands
+    networks:
+      - em_net
+
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres -d db_training_management_commands"]
+        interval: 5s
+        timeout: 10s
+        retries: 5
+
+  training_management_commands:
+    build:
+      context: ./core_functionalities/training_management_commands
+    container_name: training_management_commands_container
+    ports:
+      - "3004:3004"
+    depends_on:
+      - db_training_management_commands
+    environment:
+      DATABASE_URL: postgresql://postgres:tmCommands@db_training_management_commands:5432/db_training_management_commands
+    networks:
+      - em_net
+
+  db_training_management_queries:
+    image: postgres:13
+    container_name: db_tm_queries
+    environment:
+      POSTGRES_DB: db_training_management_queries
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: tmQueries
+    networks:
+      - em_net
+
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres -d db_training_management_queries"]
+        interval: 5s
+        timeout: 10s
+        retries: 5
+
+  training_management_queries:
+    build:
+      context: ./core_functionalities/training_management_queries
+    container_name: training_management_queries_container
+    ports:
+      - "3003:3003"
+    depends_on:
+      db_training_management_queries:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgresql://postgres:tmQueries@db_training_management_queries:5432/db_training_management_queries
+    networks:
+      - em_net
+
+  db_service_management:
+      image: postgres:13
+      container_name: db_service_management
+      environment:
+        POSTGRES_DB: db_service_management
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: smServices
+      networks:
+        - em_net
+
+      healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres -d db_service_management"]
+          interval: 5s
+          timeout: 10s
+          retries: 5
+
+  service_management:
+    build:
+      context: ./core_functionalities/services_management
+    container_name: service_management_container
+    ports:
+      - "3005:3005"
+    depends_on:
+      db_service_management:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:smServices@db_service_management:5432/db_service_management
+    networks:
+      - em_net
 
 networks:
-  app_net:
-  user_net:
-  post_net:
-  offer_net:
-  route_net:
-
+  # app_net:
+  tmq_net:
+  em_net:
+    driver: bridge

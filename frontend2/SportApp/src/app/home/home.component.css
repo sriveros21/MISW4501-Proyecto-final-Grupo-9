@@ -1,0 +1,12 @@
+div{
+  background-color: #0582CA;
+  height: 100%;
+  font-family: 'Lato';
+}
+
+.btn {
+  font-family: 'Lato';
+  color: white;
+  font-weight: bold;
+  font-size: 36px;
+}

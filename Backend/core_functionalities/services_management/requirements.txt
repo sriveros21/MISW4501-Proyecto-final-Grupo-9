@@ -12,6 +12,9 @@ pytest
 pytest-cov
 pytest-mock
 pytest-env
-bcrypt
+# bcrypt
 google-cloud-pubsub
 Flask[async]
+Flask-Testing
+Flask-Migrate
+kafka-python

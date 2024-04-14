@@ -8,6 +8,11 @@ A continuación, presentamos el paso a paso para desplegar la aplicación desarr
 ## 1. Descargar el repositorio desde github en la siguiente URL: 
            (https://github.com/MISW-4301-Desarrollo-Apps-en-la-Nube/s202314-proyecto-grupo24.)
 
+Es importante que siempre trabajes sobre un ambiente virtual y tengas todas las dependencias necesarias, para ello se recomineda seguir estos pasos:
+ - ``python3 -m venv venv``
+ - ``source venv/bin/activate``
+ - ``pip install -r requirements.txt``
+
 ## 2. Instrucciones de Ejecución de la Aplicacion con docker compose y localmente
 Esta sesion proporciona las instrucciones necesarias para desplegar y ejecutar los servicios tanto en Docker como localmente.
 
@@ -25,6 +30,13 @@ Una vez que los servicios están corriendo, necesitas ejecutar las migraciones p
 ``docker-compose exec <nombre_del_servicio> flask db upgrade``
 Reemplaza <nombre_del_servicio> con el nombre de cada servicio para el que deseas ejecutar migraciones.
 
+Si necesitas hacer el proceso completo por alguna inconsistencia:
+```bash
+docker-compose exec event_management_commands rm -r migrations
+docker-compose exec event_management_commands flask db init
+docker-compose exec event_management_commands flask db migrate -m "Initial migration"
+docker-compose exec event_management_commands flask db upgrade
+```
 ## Ejecución Local
 Para ejecutar los servicios localmente, sigue los siguientes pasos:
 
@@ -61,6 +73,9 @@ flask db upgrade
 Establece las variables de entorno necesarias para conectar con las bases de datos. Esto depende de tu sistema operativo, pero en general puedes hacerlo de la siguiente manera:
 ```bash
 export DATABASE_URL=postgresql://usuario:contraseña@localhost:5432/nombre_bd
+```
+```bash 
+export FLASK_APP=src/main.py 
 ```
 5. Ejecutar los Servicios en Puertos Específicos
 Finalmente, ejecuta cada servicio en un puerto específico usando Flask o tu servidor WSGI preferido:

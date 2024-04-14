@@ -155,6 +155,36 @@ services:
     networks:
       - em_net
 
+  db_service_management:
+      image: postgres:13
+      container_name: db_service_management
+      environment:
+        POSTGRES_DB: db_service_management
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: smServices
+      networks:
+        - em_net
+
+      healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres -d db_service_management"]
+          interval: 5s
+          timeout: 10s
+          retries: 5
+
+  service_management:
+    build:
+      context: ./core_functionalities/services_management
+    container_name: service_management_container
+    ports:
+      - "3005:3005"
+    depends_on:
+      db_service_management:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:smServices@db_service_management:5432/db_service_management
+    networks:
+      - em_net
+
 networks:
   # app_net:
   tmq_net:

@@ -1,32 +1,36 @@
-from dotenv import load_dotenv
-from flask import Flask, jsonify
-# from .user_events.users import api_users
-from .services_events.create_user_event import subscribe_to_pubsub
-from .errors.errors import ApiError
+from flask import Flask
+from .extensions import db, migrate
+
+from .api.services import service_blueprint
 import os
-from .models.database import init_db
+from .config import DevelopmentConfig, ProductionConfig, TestingConfig
 
+def create_app():
+    app = Flask(__name__)
 
-loaded = load_dotenv('.env.development')
+    # Select configuration based on FLASK_ENV environment variable
+    env = os.environ.get('FLASK_ENV', 'development')
+    if env == 'production':
+        app.config.from_object(ProductionConfig)
+    elif env == 'testing':
+        app.config.from_object(TestingConfig)
+    else:
+        app.config.from_object(DevelopmentConfig)
 
+    db.init_app(app)
 
-app = Flask(__name__)
-# app.register_blueprint(api_users)
-init_db()
+    migrate.init_app(app, db)
+    with app.app_context():
+        try:
+            db.create_all()
+            print("Database tables created or already exist.")
+        except Exception as e:
+            print(f"Error initializing database tables: {e}")
 
-@app.errorhandler(ApiError)
-def handle_exception(err):
-    response = {
-      "mssg": err.description,
-      "version": os.environ["VERSION"]
-    }
-    return jsonify(response), err.code
+    app.register_blueprint(service_blueprint)
 
+    return app
 
-if __name__ == '__main__':
-    project_id = 'proyecto-final-miso-416801'
-    subscription_name = 'evento-registrar-usuario'
-    credentials_path = 'proyecto-final-miso-416801-9cf3fcab0edf.json'
-    subscribe_to_pubsub(project_id, subscription_name, credentials_path)
-
-    app.run(host="0.0.0.0", port=3000)
+if __name__ == "__main__":
+    app = create_app()
+    app.run(host="0.0.0.0", port=3005)

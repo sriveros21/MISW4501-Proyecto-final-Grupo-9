@@ -2,13 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="DefaultPreview">
+      <entry key="FinishTrainingTest">
         <State />
       </entry>
-      <entry key="DefaultPreview (1)">
+      <entry key="HomeTest">
         <State />
       </entry>
-      <entry key="MainActivity">
+      <entry key="RunTrainingTest">
+        <State />
+      </entry>
+      <entry key="StravaViewConnectActivityTest">
+        <State />
+      </entry>
+      <entry key="Tests in 'com.example.sportapp'">
         <State />
       </entry>
       <entry key="app">

@@ -1,0 +1,59 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-12 text-center">
+      <h2 style="margin-right: 10px; font-size: 48px;  margin-top: 40px; font-family:'Lato'; font-weight: bold; color: #00355F;">Crear plan de entrenamiento</h2><br>
+    </div>
+
+    <div class="form-group col-12" style="margin-bottom: 40px; margin-top: 20px;margin-right: 40px">
+      <label class="col-3" for="seleccion" style="margin-right: 40px; margin-left: 20px; font-size: 32px; font-family: 'Lato'; font-weight: bold; color: #00355F;">Usuario:</label>
+      <select class="form-control col-4" id="seleccion" name="seleccion"  style="background-color: #0582CA; width: 263px; color:white; font-size: 20px; font-family: 'Inter-Bold', sans-serif; border: none;">
+        <option value="opcion1">Seleccione una opción:</option>
+        <option value="opcion1">Jane Doe 1</option>
+        <option value="opcion2">Jane Doe 2</option>
+        <option value="opcion3">Jane Doe 3</option>
+      </select>
+    </div>
+    
+    <form [formGroup]="formulario" (ngSubmit)="enviarFormulario()">
+
+      <div class="col-12" style="margin-bottom: 20px; margin-top: 20px;">
+        <label class="col-3" for="inputDate" style="margin-right: 40px; font-size: 32px; font-family: 'Lato'; font-weight: bold; color: #00355F;">Objetivo:</label>
+        <input formControlName="objectives" type="text" class="form-control col-4 text-center" id="inputDate" placeholder="" style="width: 538px; height: 57px; font-size: 48px; font-family: 'Inter-Thin', sans-serif;">
+      </div>
+
+      <div class="col-12" style="margin-bottom: 20px; margin-top: 20px;">
+        <label class="col-3" for="inputHour" style="margin-right: 40px; font-size: 32px; font-family: 'Lato'; font-weight: bold; color: #00355F;">Descripción:</label>
+        <input formControlName="description" type="text" class="form-control col-4 text-center" id="inputHour" placeholder="" style="width: 538px; height: 120px; font-size: 48px; font-family: 'Inter-Thin', sans-serif;">
+      </div>
+
+      <div class="col-12" style="margin-bottom: 20px; margin-top: 20px;">
+        <label class="col-3" for="inputDate" style="margin-right: 40px; font-size: 32px; font-family: 'Lato'; font-weight: bold; color: #00355F;" >Frecuencia:</label>
+        <input formControlName="frequency" type="text" class="form-control col-4 text-center" id="inputDate" placeholder="" style="width: 538px; height: 57px; font-size: 48px; font-family: 'Inter-Thin', sans-serif;">
+      </div>
+
+      <div class="col-12" style="margin-bottom: 20px; margin-top: 20px;">
+        <label class="col-3" for="inputPlace" style="margin-right: 40px; font-size: 32px; font-family: 'Lato'; font-weight: bold; color: #00355F;">Duración:</label>
+        <input formControlName="duration" type="text" class="form-control col-4 text-center" id="inputPlace" placeholder="" style="width: 538px; height: 57px; font-size: 48px; font-family: 'Inter-Thin', sans-serif;">
+      </div>
+
+      <div class="col-12" style="margin-bottom: 20px; margin-top: 20px;">
+        <label class="col-3" for="inputPlace" style="margin-right: 40px; font-size: 32px; font-family: 'Lato'; font-weight: bold; color: #00355F;">Ejercicios:</label>
+        <input formControlName="exercises" type="text" class="form-control col-4 text-center" id="inputPlace" placeholder="" style="width: 538px; height: 57px; font-size: 48px; font-family: 'Inter-Thin', sans-serif;">
+      </div>
+
+      <div class="col-12" style="margin-bottom: 10px;">
+        <button type="submit" class="btn" [disabled]="!formulario.valid">Crear</button>
+      </div>
+
+    </form>
+    
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="mostrarAlerta">
+      <strong>¡Registro creado satisfactoriamente!</strong> Tu registro se ha guardado correctamente.
+      <button type="button" class="close" aria-label="Close" (click)="mostrarAlerta = false">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+  </div>
+</div>

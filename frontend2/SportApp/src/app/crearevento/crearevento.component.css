@@ -1,0 +1,35 @@
+div {
+  background: #B6DBEF;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@font-face {
+  font-family: 'Inter-Bold';
+  src: url('/assets/fonts/Inter-Bold.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Inter-Regular';
+  src: url('/assets/fonts/Inter-Regular.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Inter-Light';
+  src: url('/assets/fonts/Inter-Light.ttf') format('truetype');
+}
+
+.btn{
+  background-color: #006494;
+  font-family: 'Lato';
+  font-size: 36px;
+  font-weight: bold;
+  color: white;
+  width: 262px;
+  height: 73px;
+
+}

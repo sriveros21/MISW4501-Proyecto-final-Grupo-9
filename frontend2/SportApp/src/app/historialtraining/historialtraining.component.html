@@ -1,0 +1,38 @@
+<div class="container-fluid" style="background-color: rgb(180,218,240);">
+  <div class="row">
+    <h1 style="font-size: 48px; color: #00355F; padding-top: 50px;">Historial de entrenamientos</h1>
+  </div>
+  <div class="row">
+    <table style="margin: 30px;">
+      <thead>
+        <tr>
+          <th>Descripción</th>
+          <th>Duración</th>
+          <th>Ejercicios</th>
+          <th>Frecuencia</th>
+          <th>Objetivos</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let plan of this.plans">
+          <td>{{ plan.description }}</td>
+          <td>{{ plan.duration }}</td>
+          <td>{{ plan.exercises }}</td>
+          <td>{{ plan.frequency }}</td>
+          <td>{{ plan.objectives }}</td>
+          <td>
+            <button type="button" class="btn btn-info">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill"
+                viewBox="0 0 16 16">
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+              </svg>
+            </button>
+          </td>
+        </tr>
+        <tr>
+      </tbody>
+    </table>
+  </div>
+</div>

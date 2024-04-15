@@ -93,7 +93,7 @@
                 android:id="@+id/tvwWelcome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginBottom="140dp"
                 android:fontFamily="@font/lato_bold_font"
                 android:text="Bienvenido, Rodolfo! "
@@ -106,6 +106,105 @@
                 app:layout_constraintHorizontal_bias="0.587"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
+
+            <TextView
+                android:id="@+id/tvwCiudad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="140dp"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="Bogotá, Colombia"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.587"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
+
+            <TextView
+                android:id="@+id/tvwEdad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="180dp"
+                android:layout_marginBottom="140dp"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="26 años"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.587"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
+
+            <TextView
+                android:id="@+id/tvwPesoEstatura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="240dp"
+                android:layout_marginBottom="140dp"
+                android:fontFamily="@font/lato_bold_font"
+                android:text="60 kg, 174 cm"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.587"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitulo" />
+
+
+            <RelativeLayout
+                android:layout_width="260dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="450dp"
+                android:background="@color/backmenuppal">
+
+                <!-- Imagen -->
+                <ImageView
+                    android:id="@+id/imgStrava"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:layout_centerVertical="false"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/logostrava"
+                    android:layout_marginTop="20dp"/>
+
+                <!-- TextView debajo de la imagen -->
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="550dp"
+                android:background="@color/backcolorapp">
+
+                <!-- TextView debajo de la imagen -->
+                <TextView
+                    android:id="@+id/tvwCerrarSesion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/lato_bold_font"
+                    android:text="@string/home_close_sesion"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="0dp"
+                    android:textSize="25dp" />
+            </RelativeLayout>
 
         </FrameLayout>
 

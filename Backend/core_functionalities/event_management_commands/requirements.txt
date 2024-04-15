@@ -1,0 +1,18 @@
+marshmallow
+sqlalchemy
+wheel
+flask
+Flask-SQLAlchemy
+python-abc
+python-dotenv
+psycopg2-binary
+requests
+exceptiongroup
+pytest
+pytest-cov
+pytest-mock
+pytest-env
+# bcrypt
+Flask-Testing
+Flask-Migrate
+kafka-python

@@ -24,4 +24,9 @@
     <string name="calendar_date_field">Date</string>
     <string name="calendar_description_field">Description</string>
     <string name="home_close_sesion">Close Sesión</string>
+    <string name="promt_start_training">Training Started.!!!</string>
+    <string name="promt_finish_training">Training Finished.!!!</string>
+    <string name="promt_data_sended">Receive Data.!!!</string>
+    <string name="units_minutes">min.</string>
+    <string name="boton_finish">FTP-Vo2Max</string>
 </resources>

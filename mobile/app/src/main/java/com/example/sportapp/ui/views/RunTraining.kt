@@ -17,7 +17,8 @@ class RunTraining : AppCompatActivity() {
     private lateinit var chronometer1: Chronometer
     private lateinit var startButton: Button
     private var isChronometerRunning: Boolean = false
-    private var valorTraining: String = ""
+    private var valorTraining: Int = 0
+    private var typeTraining: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +32,10 @@ class RunTraining : AppCompatActivity() {
             startActivity(home)
         }
 
-        valorTraining = intent.getStringExtra("training").toString()
-        tvwTypeRun.text = getString(R.string.type_training)  + " " + valorTraining
+
+        typeTraining = intent.getStringExtra("training").toString()
+
+        tvwTypeRun.text = getString(R.string.type_training)  + " " + typeTraining
         chronometer1 = findViewById(R.id.chronometer1)
         startButton = findViewById(R.id.btnStart)
 
@@ -58,20 +61,25 @@ class RunTraining : AppCompatActivity() {
             // Detener el cronómetro
             chronometer1.stop()
             val tiempoDetenido = chronometer1.text.toString()
-            // Cambiar el texto del botón a "Iniciar"
+            val partesTiempo = tiempoDetenido.split(":")
+            val minutos = partesTiempo[0].toInt()
             startButton.text = getString(R.string.start_training)
             isChronometerRunning = false
 
             //LLamar la nueva vista y pasar los parametros.
-            finishTrainingActivity(tiempoDetenido)
+            finishTrainingActivity(minutos)
 
         }
     }
 
-    private fun finishTrainingActivity(tiempoDetenido: String) {
+    private fun finishTrainingActivity(tiempoEjercicio: Int) {
         val finishTra = Intent(this, FinishTraining::class.java)
-        finishTra.putExtra("timeTraining", tiempoDetenido)
-        finishTra.putExtra("valorTraining", valorTraining)
+        var min = tiempoEjercicio
+        if (min <= 0){
+            min = 1
+        }
+        finishTra.putExtra("timeTraining", min)
+        finishTra.putExtra("typeTraining", typeTraining)
         startActivity(finishTra)
     }
 }

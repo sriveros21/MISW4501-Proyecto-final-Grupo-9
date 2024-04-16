@@ -1,0 +1,44 @@
+# Define la etiqueta que activa el trigger.
+# trigger:
+#   tags:
+#     - release-emq
+
+steps:
+# Paso 1: Ejecutar pruebas con pytest y validar cobertura
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        pip install pytest coverage
+        pytest Backend/core_functionalities/event_management_queries/tests
+        coverage run -m pytest Backend/core_functionalities/event_management_queries/tests
+        coverage report -m > coverage.txt
+
+        COVERAGE_PERCENT=$(grep -oP '\d+\.\d+(?=%)' coverage.txt)
+        if (( $(echo "$COVERAGE_PERCENT >= 70" | bc -l) )); then
+          echo "Coverage is greater than or equal to 70%."
+        else
+          echo "Coverage is less than 70%. Exiting."
+          exit 1
+        fi
+
+steps:
+# Paso 1: Construir la imagen de Docker
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/miso-proyecto-de-grado-g09/docker-images-g9/event_management_queries:latest', './event_management_queries']
+
+# Paso 2: Subir la imagen a Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/miso-proyecto-de-grado-g09/docker-images-g9/event_management_queries:latest']
+
+# Paso 3: Aplicar el archivo de configuración de Kubernetes
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'deployment/k8s-services-ms-user.yaml']
+    env:
+    - 'CLOUDSDK_COMPUTE_ZONE=us-east1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-proyecto-final'
+  
+options:
+  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
+  substitution_option: ALLOW_LOOSE

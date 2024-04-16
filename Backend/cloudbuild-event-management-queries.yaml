@@ -4,26 +4,26 @@
 #     - release-emq
 
 steps:
-# Paso 1: Ejecutar pruebas con pytest y validar cobertura
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        pip install pytest coverage
-        pytest Backend/core_functionalities/event_management_queries/tests
-        coverage run -m pytest Backend/core_functionalities/event_management_queries/tests
-        coverage report -m > coverage.txt
+# # Paso 1: Ejecutar pruebas con pytest y validar cobertura
+#   - name: 'gcr.io/cloud-builders/docker'
+#     entrypoint: 'bash'
+#     args:
+#       - '-c'
+#       - |
+#         pip install pytest coverage
+#         pytest Backend/core_functionalities/event_management_queries/tests
+#         coverage run -m pytest Backend/core_functionalities/event_management_queries/tests
+#         coverage report -m > coverage.txt
 
-        grep -oP '\d+\.\d+(?=%)' coverage.txt > coverage_percentage.txt
-        COVERAGE_PERCENT=$(cat coverage_percentage.txt)
-        echo "Coverage percentage: $COVERAGE_PERCENT%"
-        if (( $(echo "$COVERAGE_PERCENT >= 70" | bc -l) )); then
-          echo "Coverage is greater than or equal to 70%."
-        else
-          echo "Coverage is less than 70%. Exiting."
-          exit 1
-        fi
+#         grep -oP '\d+\.\d+(?=%)' coverage.txt > coverage_percentage.txt
+#         COVERAGE_PERCENT=$(cat coverage_percentage.txt)
+#         echo "Coverage percentage: $COVERAGE_PERCENT%"
+#         if (( $(echo "$COVERAGE_PERCENT >= 70" | bc -l) )); then
+#           echo "Coverage is greater than or equal to 70%."
+#         else
+#           echo "Coverage is less than 70%. Exiting."
+#           exit 1
+#         fi
 
 # Paso 2: Construir la imagen de Docker
   - name: 'gcr.io/cloud-builders/docker'

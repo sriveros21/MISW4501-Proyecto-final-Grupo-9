@@ -23,21 +23,20 @@ steps:
           exit 1
         fi
 
-steps:
-# Paso 1: Construir la imagen de Docker
+# Paso 2: Construir la imagen de Docker, subir la imagen a Google Container Registry y aplicar el archivo de configuración de Kubernetes
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'us-central1-docker.pkg.dev/miso-proyecto-de-grado-g09/docker-images-g9/event_management_queries:latest', './event_management_queries']
 
-# Paso 2: Subir la imagen a Google Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/miso-proyecto-de-grado-g09/docker-images-g9/event_management_queries:latest']
+    # Paso 2.1: Subir la imagen a Google Container Registry
+    - name: 'gcr.io/cloud-builders/docker'
+      args: ['push', 'us-central1-docker.pkg.dev/miso-proyecto-de-grado-g09/docker-images-g9/event_management_queries:latest']
 
-# Paso 3: Aplicar el archivo de configuración de Kubernetes
-  - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['apply', '-f', 'deployment/k8s-services-ms-user.yaml']
-    env:
-    - 'CLOUDSDK_COMPUTE_ZONE=us-east1'
-    - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-proyecto-final'
+    # Paso 2.2: Aplicar el archivo de configuración de Kubernetes
+    - name: 'gcr.io/cloud-builders/kubectl'
+      args: ['apply', '-f', 'deployment/k8s-services-ms-user.yaml']
+      env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-east1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-proyecto-final'
   
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET

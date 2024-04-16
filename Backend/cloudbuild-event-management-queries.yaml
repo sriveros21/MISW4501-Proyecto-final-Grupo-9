@@ -27,7 +27,7 @@ steps:
 
 # Paso 2: Construir la imagen de Docker
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/miso-proyecto-de-grado-g09/docker-images-g9/event_management_queries:latest', './core_functionalities/event_management_queries']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/miso-proyecto-de-grado-g09/docker-images-g9/event_management_queries:latest', './Backend/core_functionalities/event_management_queries']
 
 # Paso 3: Subir la imagen a Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'

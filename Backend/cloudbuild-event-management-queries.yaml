@@ -1,4 +1,4 @@
- # Define la etiqueta que activa el trigger.
+# Define la etiqueta que activa el trigger.
 # trigger:
 #   tags:
 #     - release-emq
@@ -16,6 +16,7 @@ steps:
         coverage report -m > coverage.txt
 
         COVERAGE_PERCENT=$(grep -oP '\d+\.\d+(?=%)' coverage.txt)
+        echo "Coverage percentage: $COVERAGE_PERCENT"
         if (( $(echo "$COVERAGE_PERCENT >= 70" | bc -l) )); then
           echo "Coverage is greater than or equal to 70%."
         else
@@ -23,15 +24,15 @@ steps:
           exit 1
         fi
 
-# Paso 1: Construir la imagen de Docker
+# Paso 2: Construir la imagen de Docker
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'us-central1-docker.pkg.dev/miso-proyecto-de-grado-g09/docker-images-g9/event_management_queries:latest', './event_management_queries']
 
-# Paso 2: Subir la imagen a Google Container Registry
+# Paso 3: Subir la imagen a Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/miso-proyecto-de-grado-g09/docker-images-g9/event_management_queries:latest']
 
-# Paso 3: Aplicar el archivo de configuración de Kubernetes
+# Paso 4: Aplicar el archivo de configuración de Kubernetes
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'deployment/k8s-services-ms-user.yaml']
     env:

@@ -35,10 +35,10 @@ steps:
 
 # Paso 4: Aplicar el archivo de configuración de Kubernetes
   - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['apply', '-f', 'Backend/deployment/k8s-services-ms-user.yaml']
+    args: ['apply', '-f', 'Backend/deployment/k8s-services-event-management-queries.yaml']
     env:
-    - 'CLOUDSDK_COMPUTE_ZONE=us-east1'
-    - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-proyecto-final'
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1'
   
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
